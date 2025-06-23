@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Edit, Trash2, Eye, MapPin } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Eye, MapPin, Building } from "lucide-react";
 
 const AdminProperties = () => {
   const [searchTerm, setSearchTerm] = useState("");
