@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck } from "lucide-react";
+import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const Index = () => {
@@ -18,17 +17,20 @@ const Index = () => {
     {
       image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
       title: "Find Your Perfect Dream Property",
-      subtitle: "Discover the finest properties in the most desirable locations"
+      subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
+      cta: "Explore Properties"
     },
     {
       image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&h=800&fit=crop",
       title: "Your Trusted Real Estate Partner",
-      subtitle: "Professional guidance for all your property needs"
+      subtitle: "Professional guidance and personalized service for all your property investment needs",
+      cta: "Get Started"
     },
     {
       image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1920&h=800&fit=crop",
       title: "Luxury Living Awaits You",
-      subtitle: "Exclusive properties for discerning clients"
+      subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
+      cta: "View Luxury Properties"
     }
   ];
 
@@ -136,9 +138,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Slider Section */}
+      {/* Enhanced Hero Slider Section */}
       <section className="relative">
-        <Carousel className="w-full">
+        <Carousel className="w-full" opts={{ loop: true }}>
           <CarouselContent>
             {heroSlides.map((slide, index) => (
               <CarouselItem key={index}>
@@ -148,87 +150,83 @@ const Index = () => {
                     alt={slide.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/40"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white max-w-4xl mx-auto px-4">
-                      <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                        {slide.title}
-                      </h1>
-                      <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto mb-12">
-                        {slide.subtitle}
-                      </p>
-                      
-                      {/* Search Bar */}
-                      <div className="bg-white rounded-lg shadow-xl p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                          <div className="md:col-span-2">
-                            <Input
-                              placeholder="Enter location, city, or neighborhood"
-                              value={searchLocation}
-                              onChange={(e) => setSearchLocation(e.target.value)}
-                              className="w-full"
-                            />
-                          </div>
-                          <Select value={propertyType} onValueChange={setPropertyType}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Property Type" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="house">House</SelectItem>
-                              <SelectItem value="apartment">Apartment</SelectItem>
-                              <SelectItem value="land">Land</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <Select value={priceRange} onValueChange={setPriceRange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Price Range" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="0-300000">$0 - $300K</SelectItem>
-                              <SelectItem value="300000-600000">$300K - $600K</SelectItem>
-                              <SelectItem value="600000-1000000">$600K - $1M</SelectItem>
-                              <SelectItem value="1000000+">$1M+</SelectItem>
-                            </SelectContent>
-                          </Select>
+                  {/* Enhanced overlay with gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20"></div>
+                  
+                  {/* Hero Content */}
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                      <div className="max-w-3xl">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                          {slide.title}
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed">
+                          {slide.subtitle}
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                            <Link to="/properties">
+                              {slide.cta}
+                              <ArrowRight className="w-5 h-5 ml-2" />
+                            </Link>
+                          </Button>
+                          <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto">
+                            <Link to="/contact">
+                              Contact Us
+                            </Link>
+                          </Button>
                         </div>
-                        <Button asChild className="w-full mt-4 bg-orange-600 hover:bg-orange-700 text-lg py-6">
-                          <Link to="/properties">
-                            <Search className="w-5 h-5 mr-2" />
-                            Search Properties
-                          </Link>
-                        </Button>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Slide indicator */}
+                  <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                    <div className="flex space-x-2">
+                      {heroSlides.map((_, slideIndex) => (
+                        <div
+                          key={slideIndex}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            slideIndex === index ? 'bg-orange-600 w-8' : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-4" />
-          <CarouselNext className="right-4" />
+          <CarouselPrevious className="left-8 bg-white/10 border-white/20 text-white hover:bg-white/20" />
+          <CarouselNext className="right-8 bg-white/10 border-white/20 text-white hover:bg-white/20" />
         </Carousel>
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Our Services
             </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive real estate solutions tailored to your unique needs
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {services.map((service, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-xl transition-shadow duration-300 border-orange-100">
+              <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group">
                 <CardContent className="p-0">
-                  <div className="flex justify-center mb-6">
-                    {service.icon}
+                  <div className="flex justify-center mb-8">
+                    <div className="p-4 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors duration-300">
+                      {service.icon}
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-6">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed text-lg">
                     {service.description}
                   </p>
                 </CardContent>
@@ -238,14 +236,78 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Properties */}
-      <section className="py-16 bg-gray-50">
+      {/* New Updates Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                New Updates
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Stay informed with the latest trends and developments in the real estate market. 
+                Our expert insights and market analysis help you make informed decisions whether 
+                you're buying, selling, or investing in properties.
+              </p>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-gray-700">Latest market trends and property valuations</p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-gray-700">Expert advice from our professional team</p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-gray-700">Investment opportunities and market insights</p>
+                </div>
+              </div>
+              <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/blog">
+                  Read More Updates
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Right side - YouTube video */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    title="Property Point Updates"
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                {/* Play button overlay - optional decorative element */}
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="bg-white/20 rounded-full p-4">
+                    <Play className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-200 rounded-full opacity-60"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-100 rounded-full opacity-40"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Properties */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Featured Properties
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Discover our handpicked selection of premium properties in the most sought-after locations.
             </p>
           </div>
@@ -300,7 +362,7 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button asChild variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
+            <Button asChild variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto">
               <Link to="/properties">
                 View All Properties
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -311,13 +373,13 @@ const Index = () => {
       </section>
 
       {/* Our Team Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Our Team
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Meet our experienced professionals who are dedicated to helping you find your perfect property.
             </p>
           </div>
@@ -350,34 +412,34 @@ const Index = () => {
       </section>
 
       {/* Statistics */}
-      <section className="py-16 bg-orange-600 text-white">
+      <section className="py-20 bg-orange-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold mb-2">500+</div>
-              <div className="text-orange-200">Properties Sold</div>
+              <div className="text-5xl font-bold mb-4">500+</div>
+              <div className="text-orange-200 text-lg">Properties Sold</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">1000+</div>
-              <div className="text-orange-200">Happy Clients</div>
+              <div className="text-5xl font-bold mb-4">1000+</div>
+              <div className="text-orange-200 text-lg">Happy Clients</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">15+</div>
-              <div className="text-orange-200">Years Experience</div>
+              <div className="text-5xl font-bold mb-4">15+</div>
+              <div className="text-orange-200 text-lg">Years Experience</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">50+</div>
-              <div className="text-orange-200">Expert Agents</div>
+              <div className="text-5xl font-bold mb-4">50+</div>
+              <div className="text-orange-200 text-lg">Expert Agents</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-16">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               What Our Clients Say
             </h2>
             <p className="text-xl text-gray-600">
@@ -407,19 +469,19 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gray-900 text-white">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Find Your Dream Property?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
             Let our expert team help you navigate the real estate market and find the perfect property for your needs.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
               <Link to="/properties">Browse Properties</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
