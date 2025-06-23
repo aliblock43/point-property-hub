@@ -116,7 +116,7 @@ const Properties = () => {
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
+                      <SelectItem value="all">All Types</SelectItem>
                       <SelectItem value="house">House</SelectItem>
                       <SelectItem value="apartment">Apartment</SelectItem>
                       <SelectItem value="land">Land</SelectItem>
@@ -133,7 +133,7 @@ const Properties = () => {
                       <SelectValue placeholder="Any Price" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Price</SelectItem>
+                      <SelectItem value="all">Any Price</SelectItem>
                       <SelectItem value="0-300000">$0 - $300K</SelectItem>
                       <SelectItem value="300000-600000">$300K - $600K</SelectItem>
                       <SelectItem value="600000-1000000">$600K - $1M</SelectItem>
