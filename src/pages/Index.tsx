@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play } from "lucide-react";
+import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 const Index = () => {
-  const [searchLocation, setSearchLocation] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [priceRange, setPriceRange] = useState("");
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
   const heroSlides = [
     {
@@ -33,6 +33,32 @@ const Index = () => {
       cta: "View Luxury Properties"
     }
   ];
+
+  // Auto-play functionality for hero slider
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const autoPlay = setInterval(() => {
+      api.scrollNext();
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(autoPlay);
+  }, [api]);
+
+  // Track current slide
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   const featuredProperties = [
     {
@@ -99,19 +125,28 @@ const Index = () => {
       name: "Sarah Johnson",
       role: "Senior Real Estate Agent",
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop",
-      experience: "8+ Years Experience"
+      experience: "8+ Years Experience",
+      specialization: "Luxury Properties",
+      sales: "500+ Properties Sold",
+      rating: 4.9
     },
     {
       name: "Michael Chen",
       role: "Property Investment Specialist",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-      experience: "12+ Years Experience"
+      experience: "12+ Years Experience",
+      specialization: "Investment Properties",
+      sales: "750+ Properties Sold",
+      rating: 4.8
     },
     {
       name: "Emily Rodriguez",
       role: "Luxury Property Consultant",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-      experience: "10+ Years Experience"
+      experience: "10+ Years Experience",
+      specialization: "Commercial Real Estate",
+      sales: "650+ Properties Sold",
+      rating: 4.9
     }
   ];
 
@@ -138,9 +173,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Enhanced Hero Slider Section */}
+      {/* Enhanced Auto-Moving Hero Slider Section */}
       <section className="relative">
-        <Carousel className="w-full" opts={{ loop: true }}>
+        <Carousel 
+          className="w-full" 
+          opts={{ loop: true }}
+          setApi={setApi}
+        >
           <CarouselContent>
             {heroSlides.map((slide, index) => (
               <CarouselItem key={index}>
@@ -151,26 +190,26 @@ const Index = () => {
                     className="w-full h-full object-cover"
                   />
                   {/* Enhanced overlay with gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
                   
                   {/* Hero Content */}
                   <div className="absolute inset-0 flex items-center">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                      <div className="max-w-3xl">
-                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                      <div className="max-w-4xl">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in">
                           {slide.title}
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed">
+                        <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed animate-fade-in">
                           {slide.subtitle}
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
-                          <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                        <div className="flex flex-col sm:flex-row gap-4 animate-fade-in">
+                          <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transition-all duration-300 hover:scale-105">
                             <Link to="/properties">
                               {slide.cta}
                               <ArrowRight className="w-5 h-5 ml-2" />
                             </Link>
                           </Button>
-                          <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto">
+                          <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto transition-all duration-300">
                             <Link to="/contact">
                               Contact Us
                             </Link>
@@ -180,14 +219,15 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {/* Slide indicator */}
+                  {/* Slide indicators */}
                   <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-3">
                       {heroSlides.map((_, slideIndex) => (
-                        <div
+                        <button
                           key={slideIndex}
+                          onClick={() => api?.scrollTo(slideIndex)}
                           className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            slideIndex === index ? 'bg-orange-600 w-8' : 'bg-white/50'
+                            slideIndex === current ? 'bg-orange-600 w-8' : 'bg-white/50 hover:bg-white/70'
                           }`}
                         />
                       ))}
@@ -197,8 +237,6 @@ const Index = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-8 bg-white/10 border-white/20 text-white hover:bg-white/20" />
-          <CarouselNext className="right-8 bg-white/10 border-white/20 text-white hover:bg-white/20" />
         </Carousel>
       </section>
 
@@ -216,7 +254,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {services.map((service, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group">
+              <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group transform hover:-translate-y-2">
                 <CardContent className="p-0">
                   <div className="flex justify-center mb-8">
                     <div className="p-4 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors duration-300">
@@ -314,14 +352,14 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.map((property) => (
-              <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative">
                   <img
                     src={property.image}
                     alt={property.title}
                     className="w-full h-64 object-cover"
                   />
-                  <Badge className="absolute top-4 left-4 bg-orange-600">
+                  <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                     Featured
                   </Badge>
                 </div>
@@ -372,41 +410,103 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Our Team Section */}
-      <section className="py-20 bg-gray-50">
+      {/* Redesigned Our Team Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Team
+              Meet Our Expert Team
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Meet our experienced professionals who are dedicated to helping you find your perfect property.
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Our dedicated professionals bring years of experience and deep market knowledge to help you achieve your real estate goals.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="mb-6">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-orange-100"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-orange-600 font-medium mb-2">
-                    {member.role}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {member.experience}
-                  </p>
-                </CardContent>
-              </Card>
+              <div key={index} className="group">
+                <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 bg-white border-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 to-orange-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <CardContent className="p-0 relative">
+                    {/* Image Section */}
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      
+                      {/* Rating Badge */}
+                      <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                        <Star className="w-4 h-4 mr-1 fill-current" />
+                        {member.rating}
+                      </div>
+                    </div>
+                    
+                    {/* Content Section */}
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">
+                        {member.name}
+                      </h3>
+                      <p className="text-orange-600 font-semibold text-lg mb-4">
+                        {member.role}
+                      </p>
+                      
+                      {/* Stats Grid */}
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="text-center p-3 bg-orange-50 rounded-lg">
+                          <div className="flex items-center justify-center mb-2">
+                            <Award className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <p className="text-sm font-semibold text-gray-700">{member.experience}</p>
+                        </div>
+                        <div className="text-center p-3 bg-orange-50 rounded-lg">
+                          <div className="flex items-center justify-center mb-2">
+                            <TrendingUp className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <p className="text-sm font-semibold text-gray-700">{member.sales}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Specialization */}
+                      <div className="mb-6">
+                        <p className="text-sm text-gray-500 mb-1">Specialization</p>
+                        <p className="font-semibold text-gray-800">{member.specialization}</p>
+                      </div>
+                      
+                      {/* Contact Button */}
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700 transform transition-all duration-300 group-hover:scale-105">
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Contact {member.name.split(' ')[0]}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
+          </div>
+          
+          {/* Team CTA */}
+          <div className="text-center mt-16">
+            <div className="bg-white rounded-2xl p-8 shadow-xl border border-orange-100">
+              <div className="flex items-center justify-center mb-4">
+                <Users2 className="w-12 h-12 text-orange-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Ready to Work with Our Team?
+              </h3>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Our experienced professionals are here to guide you through every step of your real estate journey.
+              </p>
+              <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/contact">
+                  Get Started Today
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -415,19 +515,19 @@ const Index = () => {
       <section className="py-20 bg-orange-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
               <div className="text-5xl font-bold mb-4">500+</div>
               <div className="text-orange-200 text-lg">Properties Sold</div>
             </div>
-            <div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
               <div className="text-5xl font-bold mb-4">1000+</div>
               <div className="text-orange-200 text-lg">Happy Clients</div>
             </div>
-            <div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
               <div className="text-5xl font-bold mb-4">15+</div>
               <div className="text-orange-200 text-lg">Years Experience</div>
             </div>
-            <div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
               <div className="text-5xl font-bold mb-4">50+</div>
               <div className="text-orange-200 text-lg">Expert Agents</div>
             </div>
@@ -449,7 +549,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6">
+              <Card key={index} className="p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-orange-100">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -459,7 +559,7 @@ const Index = () => {
                   <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
                   <div>
                     <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                    <div className="text-sm text-orange-600">{testimonial.role}</div>
                   </div>
                 </CardContent>
               </Card>
@@ -478,10 +578,10 @@ const Index = () => {
             Let our expert team help you navigate the real estate market and find the perfect property for your needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+            <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transform transition-all duration-300 hover:scale-105">
               <Link to="/properties">Browse Properties</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto">
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto transition-all duration-300">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
