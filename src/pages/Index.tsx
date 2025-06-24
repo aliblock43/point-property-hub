@@ -242,11 +242,12 @@ const Index = () => {
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">Expert advice from our professional team</p>
+                  <p className="text-gray-700">Expert advice from our profeam</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">Investment opportunities and market insights</p>
+                  <p className="text-gray-700">
+                </p>
                 </div>
               </div>
               <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
