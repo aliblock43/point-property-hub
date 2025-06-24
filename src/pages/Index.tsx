@@ -8,38 +8,31 @@ import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
-
 const Index = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-
-  const heroSlides = [
-    {
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
-      title: "Find Your Perfect Dream Property",
-      subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
-      cta: "Explore Properties"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&h=800&fit=crop",
-      title: "Your Trusted Real Estate Partner",
-      subtitle: "Professional guidance and personalized service for all your property investment needs",
-      cta: "Get Started"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1920&h=800&fit=crop",
-      title: "Luxury Living Awaits You",
-      subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
-      cta: "View Luxury Properties"
-    }
-  ];
+  const heroSlides = [{
+    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
+    title: "Find Your Perfect Dream Property",
+    subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
+    cta: "Explore Properties"
+  }, {
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&h=800&fit=crop",
+    title: "Your Trusted Real Estate Partner",
+    subtitle: "Professional guidance and personalized service for all your property investment needs",
+    cta: "Get Started"
+  }, {
+    image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1920&h=800&fit=crop",
+    title: "Luxury Living Awaits You",
+    subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
+    cta: "View Luxury Properties"
+  }];
 
   // Auto-play functionality for hero slider
   useEffect(() => {
     if (!api) {
       return;
     }
-
     const autoPlay = setInterval(() => {
       api.scrollNext();
     }, 5000); // Change slide every 5 seconds
@@ -52,143 +45,112 @@ const Index = () => {
     if (!api) {
       return;
     }
-
     setCurrent(api.selectedScrollSnap());
-
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
-
-  const featuredProperties = [
-    {
-      id: 1,
-      slug: "luxury-downtown-condo",
-      title: "Luxury Downtown Condo",
-      price: 850000,
-      location: "Downtown, Property City",
-      type: "Apartment",
-      bedrooms: 2,
-      bathrooms: 2,
-      area: 1200,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
-      featured: true
-    },
-    {
-      id: 2,
-      slug: "suburban-family-home",
-      title: "Suburban Family Home",
-      price: 675000,
-      location: "Oakwood Suburbs",
-      type: "House",
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 2400,
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
-      featured: true
-    },
-    {
-      id: 3,
-      slug: "modern-loft-apartment",
-      title: "Modern Loft Apartment",
-      price: 520000,
-      location: "Arts District",
-      type: "Apartment",
-      bedrooms: 1,
-      bathrooms: 1,
-      area: 800,
-      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop",
-      featured: true
-    }
-  ];
-
-  const services = [
-    {
-      icon: <ShoppingCart className="w-12 h-12 text-orange-600" />,
-      title: "Buying",
-      description: "Get in touch with Property Point for buying a property and we will provide you a number of options in accordance of your budget and preferred locality. Guiding you with the most suitable choice for your needs is our top priority as we are committed to serve you with the very best."
-    },
-    {
-      icon: <Home className="w-12 h-12 text-orange-600" />,
-      title: "Selling Property",
-      description: "Contact us to evaluate your property's value and we will also connect you with serious buyers upon your request. Sell your property with our assistance as we advertise it to the masses on various digital channels to make it a lot easier for you."
-    },
-    {
-      icon: <MessageCircle className="w-12 h-12 text-orange-600" />,
-      title: "Chat us",
-      description: "Either buying, selling a property or looking for an investment, proper consultation is required to take the right decision at the right time. Contact any of our highly experienced realtors for free and reliable real estate consultancy to step forward in the right direction."
-    }
-  ];
-
-  const teamMembers = [
-    {
-      name: "Sarah Johnson",
-      role: "Senior Real Estate Agent",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop",
-      experience: "8+ Years Experience",
-      specialization: "Luxury Properties",
-      sales: "500+ Properties Sold",
-      rating: 4.9
-    },
-    {
-      name: "Michael Chen",
-      role: "Property Investment Specialist",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-      experience: "12+ Years Experience",
-      specialization: "Investment Properties",
-      sales: "750+ Properties Sold",
-      rating: 4.8
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Luxury Property Consultant",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-      experience: "10+ Years Experience",
-      specialization: "Commercial Real Estate",
-      sales: "650+ Properties Sold",
-      rating: 4.9
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "First-time Buyer",
-      content: "Property Point made buying my first home so easy. Their team was professional and guided me through every step.",
-      rating: 5
-    },
-    {
-      name: "Mike Chen",
-      role: "Property Investor",
-      content: "I've worked with many real estate agencies, but Property Point stands out for their market knowledge and professionalism.",
-      rating: 5
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Home Seller",
-      content: "They sold my house in just 2 weeks! Amazing service and great communication throughout the process.",
-      rating: 5
-    }
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const featuredProperties = [{
+    id: 1,
+    slug: "luxury-downtown-condo",
+    title: "Luxury Downtown Condo",
+    price: 850000,
+    location: "Downtown, Property City",
+    type: "Apartment",
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1200,
+    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
+    featured: true
+  }, {
+    id: 2,
+    slug: "suburban-family-home",
+    title: "Suburban Family Home",
+    price: 675000,
+    location: "Oakwood Suburbs",
+    type: "House",
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 2400,
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
+    featured: true
+  }, {
+    id: 3,
+    slug: "modern-loft-apartment",
+    title: "Modern Loft Apartment",
+    price: 520000,
+    location: "Arts District",
+    type: "Apartment",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 800,
+    image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop",
+    featured: true
+  }];
+  const services = [{
+    icon: <ShoppingCart className="w-12 h-12 text-orange-600" />,
+    title: "Buying",
+    description: "Get in touch with Property Point for buying a property and we will provide you a number of options in accordance of your budget and preferred locality. Guiding you with the most suitable choice for your needs is our top priority as we are committed to serve you with the very best."
+  }, {
+    icon: <Home className="w-12 h-12 text-orange-600" />,
+    title: "Selling Property",
+    description: "Contact us to evaluate your property's value and we will also connect you with serious buyers upon your request. Sell your property with our assistance as we advertise it to the masses on various digital channels to make it a lot easier for you."
+  }, {
+    icon: <MessageCircle className="w-12 h-12 text-orange-600" />,
+    title: "Chat us",
+    description: "Either buying, selling a property or looking for an investment, proper consultation is required to take the right decision at the right time. Contact any of our highly experienced realtors for free and reliable real estate consultancy to step forward in the right direction."
+  }];
+  const teamMembers = [{
+    name: "Sarah Johnson",
+    role: "Senior Real Estate Agent",
+    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop",
+    experience: "8+ Years Experience",
+    specialization: "Luxury Properties",
+    sales: "500+ Properties Sold",
+    rating: 4.9
+  }, {
+    name: "Michael Chen",
+    role: "Property Investment Specialist",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+    experience: "12+ Years Experience",
+    specialization: "Investment Properties",
+    sales: "750+ Properties Sold",
+    rating: 4.8
+  }, {
+    name: "Emily Rodriguez",
+    role: "Luxury Property Consultant",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    experience: "10+ Years Experience",
+    specialization: "Commercial Real Estate",
+    sales: "650+ Properties Sold",
+    rating: 4.9
+  }];
+  const testimonials = [{
+    name: "Sarah Johnson",
+    role: "First-time Buyer",
+    content: "Property Point made buying my first home so easy. Their team was professional and guided me through every step.",
+    rating: 5
+  }, {
+    name: "Mike Chen",
+    role: "Property Investor",
+    content: "I've worked with many real estate agencies, but Property Point stands out for their market knowledge and professionalism.",
+    rating: 5
+  }, {
+    name: "Emily Rodriguez",
+    role: "Home Seller",
+    content: "They sold my house in just 2 weeks! Amazing service and great communication throughout the process.",
+    rating: 5
+  }];
+  return <div className="min-h-screen">
       {/* Enhanced Auto-Moving Hero Slider Section */}
       <section className="relative">
-        <Carousel 
-          className="w-full" 
-          opts={{ loop: true }}
-          setApi={setApi}
-        >
+        <Carousel className="w-full" opts={{
+        loop: true
+      }} setApi={setApi}>
           <CarouselContent>
-            {heroSlides.map((slide, index) => (
-              <CarouselItem key={index}>
+            {heroSlides.map((slide, index) => <CarouselItem key={index}>
                 <div className="relative h-screen">
-                  <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
                   {/* Enhanced overlay with gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
                   
@@ -222,20 +184,11 @@ const Index = () => {
                   {/* Slide indicators */}
                   <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
                     <div className="flex space-x-3">
-                      {heroSlides.map((_, slideIndex) => (
-                        <button
-                          key={slideIndex}
-                          onClick={() => api?.scrollTo(slideIndex)}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            slideIndex === current ? 'bg-orange-600 w-8' : 'bg-white/50 hover:bg-white/70'
-                          }`}
-                        />
-                      ))}
+                      {heroSlides.map((_, slideIndex) => <button key={slideIndex} onClick={() => api?.scrollTo(slideIndex)} className={`w-3 h-3 rounded-full transition-all duration-300 ${slideIndex === current ? 'bg-orange-600 w-8' : 'bg-white/50 hover:bg-white/70'}`} />)}
                     </div>
                   </div>
                 </div>
-              </CarouselItem>
-            ))}
+              </CarouselItem>)}
           </CarouselContent>
         </Carousel>
       </section>
@@ -253,8 +206,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {services.map((service, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group transform hover:-translate-y-2">
+            {services.map((service, index) => <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group transform hover:-translate-y-2">
                 <CardContent className="p-0">
                   <div className="flex justify-center mb-8">
                     <div className="p-4 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors duration-300">
@@ -268,8 +220,7 @@ const Index = () => {
                     {service.description}
                   </p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -283,11 +234,7 @@ const Index = () => {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 New Updates
               </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Stay informed with the latest trends and developments in the real estate market. 
-                Our expert insights and market analysis help you make informed decisions whether 
-                you're buying, selling, or investing in properties.
-              </p>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">Congratulations to everyone DHA Announced a possession in phase 8 S, T, U, V, W and Y Blocks except X and Y2. Possession Ceremony was held in DHA Lahore Phase 8, W Block. It is the biggest sign to buy plots in DHA phase 8 and the reason that its price are expected to go upwards. We are highly recommended to buy plots in DHA Lahore phase 8. DHA Lahore phase 8 X Block and Y2 Block possession announced within 6 months. Once again Congratulations to everyone phase 8 possession officially announced by DHA Lahore.</p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
@@ -314,14 +261,7 @@ const Index = () => {
             <div className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
                 <div className="aspect-video">
-                  <iframe
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    title="Property Point Updates"
-                    className="w-full h-full"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 </div>
                 {/* Play button overlay - optional decorative element */}
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -351,14 +291,9 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProperties.map((property) => (
-              <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            {featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative">
-                  <img
-                    src={property.image}
-                    alt={property.title}
-                    className="w-full h-64 object-cover"
-                  />
+                  <img src={property.image} alt={property.title} className="w-full h-64 object-cover" />
                   <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                     Featured
                   </Badge>
@@ -395,8 +330,7 @@ const Index = () => {
                     </Link>
                   </Button>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
           <div className="text-center mt-12">
@@ -423,19 +357,14 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="group">
+            {teamMembers.map((member, index) => <div key={index} className="group">
                 <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 bg-white border-0">
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 to-orange-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <CardContent className="p-0 relative">
                     {/* Image Section */}
                     <div className="relative overflow-hidden">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
+                      <img src={member.image} alt={member.name} className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       
                       {/* Rating Badge */}
@@ -484,8 +413,7 @@ const Index = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </div>
-            ))}
+              </div>)}
           </div>
           
           {/* Team CTA */}
@@ -548,13 +476,10 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-orange-100">
+            {testimonials.map((testimonial, index) => <Card key={index} className="p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-orange-100">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-orange-400 fill-current" />
-                    ))}
+                    {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-5 h-5 text-orange-400 fill-current" />)}
                   </div>
                   <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
                   <div>
@@ -562,8 +487,7 @@ const Index = () => {
                     <div className="text-sm text-orange-600">{testimonial.role}</div>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -587,8 +511,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
