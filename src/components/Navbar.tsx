@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Home, Building, Users, Mail, BookOpen } from "lucide-react";
+import { Menu, X, Home, Building, Users, Mail, BookOpen, User } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +16,7 @@ const Navbar = () => {
     { path: "/", label: "Home", icon: Home },
     { path: "/properties", label: "Properties", icon: Building },
     { path: "/about", label: "About", icon: Users },
+    { path: "/profile", label: "Profile", icon: User },
     { path: "/blog", label: "Blog", icon: BookOpen },
     { path: "/contact", label: "Contact", icon: Mail },
   ];
