@@ -1,7 +1,7 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Users, Award, Home, MapPin, Star, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -27,6 +27,34 @@ const About = () => {
       experience: "5+ years",
       specialties: ["Residential Sales", "Property Management"],
       image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "David Thompson",
+      role: "Commercial Real Estate Specialist",
+      experience: "12+ years",
+      specialties: ["Office Buildings", "Retail Spaces"],
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "Jessica Williams",
+      role: "Luxury Home Consultant",
+      experience: "7+ years",
+      specialties: ["Luxury Estates", "High-end Properties"],
+      image: "https://images.unsplash.com/photo-1494790108755-2616b332446c?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "Robert Martinez",
+      role: "Property Development Advisor",
+      experience: "15+ years",
+      specialties: ["New Developments", "Land Acquisition"],
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "Lisa Anderson",
+      role: "Residential Sales Manager",
+      experience: "9+ years",
+      specialties: ["Family Homes", "Relocation Services"],
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face"
     }
   ];
 
@@ -140,34 +168,40 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                  <p className="text-orange-600 font-medium mb-2">{member.role}</p>
-                  <div className="flex items-center mb-3">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                    <span className="text-sm text-gray-600">{member.experience} experience</span>
-                  </div>
-                  <div className="space-y-1">
-                    {member.specialties.map((specialty, i) => (
-                      <Badge key={i} variant="outline" className="mr-1 mb-1">
-                        {specialty}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Carousel className="w-full">
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {teamMembers.map((member, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card className="overflow-hidden hover:shadow-xl transition-shadow h-full">
+                    <div className="aspect-square overflow-hidden">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
+                      <p className="text-orange-600 font-medium mb-2">{member.role}</p>
+                      <div className="flex items-center mb-3">
+                        <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                        <span className="text-sm text-gray-600">{member.experience} experience</span>
+                      </div>
+                      <div className="space-y-1">
+                        {member.specialties.map((specialty, i) => (
+                          <Badge key={i} variant="outline" className="mr-1 mb-1">
+                            {specialty}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,12 +56,12 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-orange-600 to-orange-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Contact Us
           </h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+          <p className="text-xl text-orange-100 max-w-2xl mx-auto">
             Ready to start your real estate journey? Get in touch with our expert team today.
           </p>
         </div>
@@ -86,8 +85,8 @@ const Contact = () => {
                 <Card key={index} className="p-4">
                   <CardContent className="p-0">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <info.icon className="w-6 h-6 text-blue-600" />
+                      <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <info.icon className="w-6 h-6 text-orange-600" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 mb-1">
@@ -96,7 +95,7 @@ const Contact = () => {
                         {info.link ? (
                           <a
                             href={info.link}
-                            className="text-gray-600 hover:text-blue-600 transition-colors"
+                            className="text-gray-600 hover:text-orange-600 transition-colors"
                           >
                             {info.content}
                           </a>
@@ -111,7 +110,7 @@ const Contact = () => {
             </div>
 
             {/* Quick Actions */}
-            <Card className="p-6 bg-blue-50">
+            <Card className="p-6 bg-orange-50">
               <CardContent className="p-0">
                 <h3 className="font-semibold text-gray-900 mb-4">
                   Need Immediate Assistance?
@@ -225,7 +224,7 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
+                  <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" size="lg">
                     <Send className="w-5 h-5 mr-2" />
                     Send Message
                   </Button>

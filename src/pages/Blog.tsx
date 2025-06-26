@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,12 +58,12 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-orange-600 to-orange-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Real Estate Blog
           </h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+          <p className="text-xl text-orange-100 max-w-2xl mx-auto">
             Stay informed with the latest real estate insights, market trends, and expert advice from our team.
           </p>
         </div>
@@ -115,7 +114,7 @@ const Blog = () => {
                   ))}
                 </div>
                 
-                <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                <Button asChild className="bg-orange-600 hover:bg-orange-700">
                   <Link to={`/blog/${featuredPost.slug}`}>
                     Read More
                     <ArrowRight className="w-4 h-4 ml-2" />
@@ -183,21 +182,21 @@ const Blog = () => {
 
         {/* Newsletter Signup */}
         <div className="mt-16">
-          <Card className="bg-blue-600 text-white p-8">
+          <Card className="bg-orange-600 text-white p-8">
             <CardContent className="p-0 text-center">
               <h3 className="text-2xl font-bold mb-4">
                 Stay Updated with Real Estate Insights
               </h3>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              <p className="text-orange-100 mb-6 max-w-2xl mx-auto">
                 Subscribe to our newsletter to receive the latest market updates, buying and selling tips, and exclusive property listings.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 rounded-lg text-gray-900 border-0 focus:ring-2 focus:ring-blue-300"
+                  className="flex-1 px-4 py-2 rounded-lg text-gray-900 border-0 focus:ring-2 focus:ring-orange-300"
                 />
-                <Button className="bg-white text-blue-600 hover:bg-gray-100">
+                <Button className="bg-white text-orange-600 hover:bg-gray-100">
                   Subscribe
                 </Button>
               </div>
