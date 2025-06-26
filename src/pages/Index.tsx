@@ -8,22 +8,23 @@ import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
+
 const Index = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const heroSlides = [{
     image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
-    title: "Find Your Perfect Dream Property",
+    title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
   }, {
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&h=800&fit=crop",
-    title: "Your Trusted Real Estate Partner",
+    title: "DHA MULTAN PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Professional guidance and personalized service for all your property investment needs",
     cta: "Get Started"
   }, {
     image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1920&h=800&fit=crop",
-    title: "Luxury Living Awaits You",
+    title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
   }];
@@ -171,7 +172,7 @@ const Index = () => {
                               <ArrowRight className="w-5 h-5 ml-2" />
                             </Link>
                           </Button>
-                          <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto transition-all duration-300">
+                          <Button asChild variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
                             <Link to="/contact">
                               Contact Us
                             </Link>
@@ -235,21 +236,6 @@ const Index = () => {
                 New Updates
               </h2>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">Congratulations to everyone DHA Announced a possession in phase 8 S, T, U, V, W and Y Blocks except X and Y2. Possession Ceremony was held in DHA Lahore Phase 8, W Block. It is the biggest sign to buy plots in DHA phase 8 and the reason that its price are expected to go upwards. We are highly recommended to buy plots in DHA Lahore phase 8. DHA Lahore phase 8 X Block and Y2 Block possession announced within 6 months. Once again Congratulations to everyone phase 8 possession officially announced by DHA Lahore.</p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">Latest market trends and property valuations</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">Expert advice from our profeam</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">
-                </p>
-                </div>
-              </div>
               <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
                 <Link to="/blog">
                   Read More Updates
@@ -514,4 +500,5 @@ const Index = () => {
       </section>
     </div>;
 };
+
 export default Index;
