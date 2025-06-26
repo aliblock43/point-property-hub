@@ -5,13 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2 } from "lucide-react";
+import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
 
 const Index = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [certificateApi, setCertificateApi] = useState<CarouselApi>();
+  const [currentCertificate, setCurrentCertificate] = useState(0);
+
   const heroSlides = [{
     image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
@@ -51,6 +54,18 @@ const Index = () => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
+
+  // Certificate carousel tracking
+  useEffect(() => {
+    if (!certificateApi) {
+      return;
+    }
+    setCurrentCertificate(certificateApi.selectedScrollSnap());
+    certificateApi.on("select", () => {
+      setCurrentCertificate(certificateApi.selectedScrollSnap());
+    });
+  }, [certificateApi]);
+
   const featuredProperties = [{
     id: 1,
     slug: "luxury-downtown-condo",
@@ -142,6 +157,27 @@ const Index = () => {
     content: "They sold my house in just 2 weeks! Amazing service and great communication throughout the process.",
     rating: 5
   }];
+  const certificates = [
+    {
+      id: 1,
+      title: "Real Estate Excellence Award",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=800&fit=crop",
+      description: "Outstanding Achievement in Real Estate Services"
+    },
+    {
+      id: 2,
+      title: "Professional Certification",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=800&fit=crop",
+      description: "Certified Real Estate Professional"
+    },
+    {
+      id: 3,
+      title: "Industry Recognition",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=800&fit=crop",
+      description: "Top Performing Real Estate Agency"
+    }
+  ];
+
   return <div className="min-h-screen">
       {/* Enhanced Auto-Moving Hero Slider Section */}
       <section className="relative">
@@ -421,6 +457,113 @@ const Index = () => {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certificates Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Information */}
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Our Certifications & Awards
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Property Point has been recognized for excellence in real estate services. Our certifications and awards demonstrate our commitment to providing the highest quality service to our clients and maintaining professional standards in the industry.
+              </p>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start space-x-3">
+                  <Award className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Professional Excellence</h3>
+                    <p className="text-gray-600">Certified by leading real estate organizations</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <Star className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Industry Recognition</h3>
+                    <p className="text-gray-600">Award-winning service and customer satisfaction</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <TrendingUp className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Market Leadership</h3>
+                    <p className="text-gray-600">Leading performance in local real estate market</p>
+                  </div>
+                </div>
+              </div>
+              <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/about">
+                  Learn More About Us
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Right side - Certificate Carousel */}
+            <div className="relative">
+              <Carousel className="w-full max-w-md mx-auto" setApi={setCertificateApi}>
+                <CarouselContent>
+                  {certificates.map((certificate) => (
+                    <CarouselItem key={certificate.id}>
+                      <Card className="border-0 shadow-2xl overflow-hidden bg-white">
+                        <CardContent className="p-0">
+                          <div className="relative">
+                            <img
+                              src={certificate.image}
+                              alt={certificate.title}
+                              className="w-full h-96 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                              <h3 className="text-xl font-bold mb-2">{certificate.title}</h3>
+                              <p className="text-gray-200">{certificate.description}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                
+                {/* Custom Navigation Buttons */}
+                <button
+                  onClick={() => certificateApi?.scrollPrev()}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-orange-600 p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => certificateApi?.scrollNext()}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-orange-600 p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </Carousel>
+
+              {/* Certificate indicators */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {certificates.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => certificateApi?.scrollTo(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentCertificate 
+                        ? 'bg-orange-600 w-8' 
+                        : 'bg-orange-200 hover:bg-orange-300'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-200 rounded-full opacity-60"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-100 rounded-full opacity-40"></div>
             </div>
           </div>
         </div>
