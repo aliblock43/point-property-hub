@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Profile from "./pages/Profile";
+import Maps from "./pages/Maps";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProperties from "./pages/admin/AdminProperties";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:slug" element={<BlogPost />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="maps" element={<Maps />} />
           </Route>
           
           {/* Admin Routes */}
