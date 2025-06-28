@@ -16,17 +16,17 @@ const Index = () => {
   const [currentCertificate, setCurrentCertificate] = useState(0);
 
   const heroSlides = [{
-    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=800&fit=crop",
+    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
   }, {
-    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&h=800&fit=crop",
+    image: "/lovable-uploads/579a50ca-0240-45a7-a77c-d35e4681f608.png",
     title: "DHA MULTAN PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Professional guidance and personalized service for all your property investment needs",
     cta: "Get Started"
   }, {
-    image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1920&h=800&fit=crop",
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
     title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
@@ -635,7 +635,7 @@ const Index = () => {
             <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transform transition-all duration-300 hover:scale-105">
               <Link to="/properties">Browse Properties</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-4 h-auto transition-all duration-300">
+            <Button asChild variant="outline" size="lg" className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
