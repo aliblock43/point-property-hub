@@ -15,10 +15,10 @@ const Navbar = () => {
   const navItems = [
     { path: "/", label: "Home", icon: Home },
     { path: "/properties", label: "Properties", icon: Building },
-    { path: "/about", label: "About", icon: Users },
-    { path: "/profile", label: "Profile", icon: User },
     { path: "/maps", label: "Maps", icon: Map },
     { path: "/blog", label: "Blog", icon: BookOpen },
+    { path: "/profile", label: "Profile", icon: User },
+    { path: "/about", label: "About", icon: Users },
     { path: "/contact", label: "Contact", icon: Mail },
   ];
 

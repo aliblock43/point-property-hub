@@ -284,7 +284,7 @@ const Index = () => {
             <div className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
                 <div className="aspect-video">
-                  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  <iframe src="https://www.youtube.com/embed/6V4fvoLttp0" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 </div>
                 {/* Play button overlay - optional decorative element */}
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">

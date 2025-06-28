@@ -26,23 +26,23 @@ const Footer = () => {
                   <MapPin className="w-4 h-4 text-white" />
                 </div>
                 <span className="text-gray-300 group-hover:text-white transition-colors">
-                  123 Real Estate Ave, Property City, PC 12345
+                  47MB Eden City Phase 8 Lahore
                 </span>
               </div>
               <div className="flex items-center space-x-3 group">
                 <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition-colors">
                   <Mail className="w-4 h-4 text-white" />
                 </div>
-                <a href="mailto:info@propertypoint.com" className="text-gray-300 group-hover:text-orange-400 transition-colors">
-                  info@propertypoint.com
+                <a href="mailto:propertypointestate@gmail.com" className="text-gray-300 group-hover:text-orange-400 transition-colors">
+                  propertypointestate@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-3 group">
                 <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition-colors">
                   <Phone className="w-4 h-4 text-white" />
                 </div>
-                <a href="tel:+15551234567" className="text-gray-300 group-hover:text-orange-400 transition-colors">
-                  +1 (555) 123-4567
+                <a href="tel:+923218451083" className="text-gray-300 group-hover:text-orange-400 transition-colors">
+                  +92 321-8451083
                 </a>
               </div>
             </div>
