@@ -16,7 +16,7 @@ const Index = () => {
   const [currentCertificate, setCurrentCertificate] = useState(0);
 
   const heroSlides = [{
-    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
@@ -26,7 +26,7 @@ const Index = () => {
     subtitle: "Professional guidance and personalized service for all your property investment needs",
     cta: "Get Started"
   }, {
-    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
+    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
     title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
@@ -117,24 +117,24 @@ const Index = () => {
     description: "Either buying, selling a property or looking for an investment, proper consultation is required to take the right decision at the right time. Contact any of our highly experienced realtors for free and reliable real estate consultancy to step forward in the right direction."
   }];
   const teamMembers = [{
-    name: "Sarah Johnson",
-    role: "Senior Real Estate Agent",
+    name: "Umer Shahid",
+    role: "Chief Executive Officer",
     image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop",
     experience: "8+ Years Experience",
     specialization: "Luxury Properties",
     sales: "500+ Properties Sold",
     rating: 4.9
   }, {
-    name: "Michael Chen",
-    role: "Property Investment Specialist",
+    name: "Adil Ilyas",
+    role: "Director of Sales and Business Development",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
     experience: "12+ Years Experience",
     specialization: "Investment Properties",
     sales: "750+ Properties Sold",
     rating: 4.8
   }, {
-    name: "Emily Rodriguez",
-    role: "Luxury Property Consultant",
+    name: "Shahid Iqbal Zia",
+    role: "Managing Director",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
     experience: "10+ Years Experience",
     specialization: "Commercial Real Estate",
@@ -635,7 +635,7 @@ const Index = () => {
             <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transform transition-all duration-300 hover:scale-105">
               <Link to="/properties">Browse Properties</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
+            <Button asChild variant="outline" size="lg" className="bg-white text-yellow-600 border-white hover:bg-yellow-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
