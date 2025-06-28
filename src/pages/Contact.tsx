@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,20 +31,20 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Visit Our Office",
-      content: "123 Real Estate Ave, Property City, PC 12345",
+      content: "47MB Eden City Phase 8 Lahore",
       link: "#"
     },
     {
       icon: Phone,
       title: "Call Us",
-      content: "+1 (555) 123-4567",
-      link: "tel:+15551234567"
+      content: "+92 321-8451083",
+      link: "tel:+923218451083"
     },
     {
       icon: Mail,
       title: "Email Us",
-      content: "info@propertypoint.com",
-      link: "mailto:info@propertypoint.com"
+      content: "propertypointestate@gmail.com",
+      link: "mailto:propertypointestate@gmail.com"
     },
     {
       icon: Clock,
@@ -117,15 +118,15 @@ const Contact = () => {
                 </h3>
                 <div className="space-y-3">
                   <Button asChild className="w-full justify-start" variant="outline">
-                    <a href="tel:+15551234567">
+                    <a href="tel:+923218451083">
                       <Phone className="w-4 h-4 mr-2" />
-                      Call Now: (555) 123-4567
+                      Call Now: +92 321-8451083
                     </a>
                   </Button>
                   <Button asChild className="w-full justify-start" variant="outline">
-                    <a href="mailto:info@propertypoint.com">
+                    <a href="mailto:propertypointestate@gmail.com">
                       <Mail className="w-4 h-4 mr-2" />
-                      Email: info@propertypoint.com
+                      Email: propertypointestate@gmail.com
                     </a>
                   </Button>
                 </div>
@@ -244,14 +245,17 @@ const Contact = () => {
         <div className="mt-16">
           <Card className="overflow-hidden">
             <CardContent className="p-0">
-              <div className="bg-gray-200 h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                  <p className="text-gray-600">Interactive map will be displayed here</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    123 Real Estate Ave, Property City, PC 12345
-                  </p>
-                </div>
+              <div className="w-full h-96">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4260.727108577938!2d74.43157691232946!3d31.510555366378494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190f14fa499f17%3A0xc5359add9b7b7c2!2sProperty%20Point%20Estate%20(R)!5e1!3m2!1sen!2s!4v1751127516137!5m2!1sen!2s" 
+                  width="100%" 
+                  height="100%" 
+                  style={{border: 0}} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Property Point Estate Location"
+                ></iframe>
               </div>
             </CardContent>
           </Card>
