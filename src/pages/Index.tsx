@@ -121,7 +121,7 @@ const Index = () => {
   const teamMembers = [{
     name: "Umer Shahid",
     role: "Chief Executive Officer",
-    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png",
+    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
     experience: "12+ Years Experience",
     specialization: "Luxury Properties",
     sales: "500+ Properties Sold",
@@ -129,7 +129,7 @@ const Index = () => {
   }, {
     name: "Adil Ilyas",
     role: "Director of Sales and Business Development",
-    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
+    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png",
     experience: "6+ Years Experience",
     specialization: "Investment Properties",
     sales: "750+ Properties Sold",

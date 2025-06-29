@@ -12,14 +12,14 @@ const About = () => {
       role: "Chief Executive Officer",
       experience: "12+ years",
       specialties: ["Luxury Properties", "Property Investment"],
-      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
+      image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png"
     },
     {
       name: "Adil Ilyas",
       role: "Director of Sales and Business Development",
       experience: "6+ years",
       specialties: ["Investment Properties", "Business Development"],
-      image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png"
+      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
     },
     {
       name: "Shahid Iqbal Zia",
