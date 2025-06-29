@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -119,24 +120,24 @@ const Index = () => {
   const teamMembers = [{
     name: "Umer Shahid",
     role: "Chief Executive Officer",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop",
-    experience: "8+ Years Experience",
+    image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png",
+    experience: "12+ Years Experience",
     specialization: "Luxury Properties",
     sales: "500+ Properties Sold",
     rating: 4.9
   }, {
     name: "Adil Ilyas",
     role: "Director of Sales and Business Development",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-    experience: "12+ Years Experience",
+    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png",
+    experience: "6+ Years Experience",
     specialization: "Investment Properties",
     sales: "750+ Properties Sold",
     rating: 4.8
   }, {
     name: "Shahid Iqbal Zia",
     role: "Managing Director",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    experience: "10+ Years Experience",
+    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
+    experience: "8+ Years Experience",
     specialization: "Commercial Real Estate",
     sales: "650+ Properties Sold",
     rating: 4.9
@@ -635,7 +636,7 @@ const Index = () => {
             <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transform transition-all duration-300 hover:scale-105">
               <Link to="/properties">Browse Properties</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="bg-white text-yellow-600 border-white hover:bg-yellow-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
+            <Button asChild variant="outline" size="lg" className="bg-white text-orange-600 border-white hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
