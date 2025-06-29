@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,25 +9,25 @@ import { Link } from "react-router-dom";
 const About = () => {
   const teamMembers = [
     {
-      name: "Sarah Johnson",
-      role: "Senior Real Estate Agent",
-      experience: "10+ years",
-      specialties: ["Luxury Properties", "First-time Buyers"],
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=300&h=300&fit=crop&crop=face"
+      name: "Umer Shahid",
+      role: "Chief Executive Officer",
+      experience: "12+ years",
+      specialties: ["Luxury Properties", "Property Investment"],
+      image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png"
     },
     {
-      name: "Michael Chen",
-      role: "Property Investment Consultant",
+      name: "Adil Ilyas",
+      role: "Director of Sales and Business Development",
+      experience: "6+ years",
+      specialties: ["Investment Properties", "Business Development"],
+      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
+    },
+    {
+      name: "Shahid Iqbal Zia",
+      role: "Managing Director",
       experience: "8+ years",
-      specialties: ["Investment Properties", "Commercial Real Estate"],
-      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=300&h=300&fit=crop&crop=face"
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Real Estate Agent",
-      experience: "5+ years",
-      specialties: ["Residential Sales", "Property Management"],
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=300&fit=crop&crop=face"
+      specialties: ["Commercial Real Estate", "Property Management"],
+      image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png"
     },
     {
       name: "David Thompson",
