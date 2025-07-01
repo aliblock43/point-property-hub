@@ -33,28 +33,28 @@ const About = () => {
       role: "House Sale Expert",
       experience: "8+ years",
       specialties: ["Houses", "Appartments",],
-      image: "/lovable-uploads/SHRAFAT PP.png"
+      image: "/lovable-uploads/SHRAFATPP.png"
     },
     {
       name: "Zarrar Malik",
       role: "House Sale Expert",
       experience: "7+ years",
       specialties: ["Houses", "High-end Properties"],
-      image: "/lovable-uploads/ZARAR PP.png"
+      image: "/lovable-uploads/ZARARPP.png"
     },
     {
       name: "Muhammad Iqbal Asim",
       role: "Residential and Commercial Rent Expert",
       experience: "6+ years",
       specialties: ["Residential Properties", "Commercial Rentals"],
-      image: "/lovable-uploads/IQBAL PP.png"
+      image: "/lovable-uploads/IQBALPP.png"
     },
     {
       name: "Muhammad Naeem",
       role: "Residential Sales Manager",
       experience: "9+ years",
       specialties: ["Family Homes", "Relocation Services"],
-      image: "/lovable-uploads/NAEEM PP.png"
+      image: "/lovable-uploads/NAEEMPP.png"
     }
   ];
 
