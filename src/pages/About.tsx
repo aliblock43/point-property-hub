@@ -19,14 +19,14 @@ const About = () => {
       role: "Director of Sales and Business Development",
       experience: "6+ years",
       specialties: ["Investment Properties", "Business Development"],
-      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
+      image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png"
     },
     {
       name: "Shahid Iqbal Zia",
       role: "Managing Director",
       experience: "8+ years",
       specialties: ["Commercial Real Estate", "Property Management"],
-      image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png"
+      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
     },
     {
       name: "David Thompson",
