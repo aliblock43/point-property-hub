@@ -65,6 +65,7 @@ const Maps = () => {
                     />
                   </div>
                   <div className="p-4">
+                    <h4 className= "text-xl font-semibold text-gray-900 mb-3">Lahore</h4>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">
                       Map {index + 1}
                     </h3>
