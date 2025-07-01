@@ -29,32 +29,32 @@ const About = () => {
       image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
     },
     {
-      name: "David Thompson",
-      role: "Commercial Real Estate Specialist",
-      experience: "12+ years",
-      specialties: ["Office Buildings", "Retail Spaces"],
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+      name: "Major Sharafat Ali Khan",
+      role: "House Sale Expert",
+      experience: "8+ years",
+      specialties: ["Houses", "Appartments",],
+      image: "/lovable-uploads/SHRAFAT PP.png"
     },
     {
-      name: "Jessica Williams",
-      role: "Luxury Home Consultant",
+      name: "Zarrar Malik",
+      role: "House Sale Expert",
       experience: "7+ years",
-      specialties: ["Luxury Estates", "High-end Properties"],
-      image: "https://images.unsplash.com/photo-1494790108755-2616b332446c?w=300&h=300&fit=crop&crop=face"
+      specialties: ["Houses", "High-end Properties"],
+      image: "/lovable-uploads/ZARAR PP.png"
     },
     {
-      name: "Robert Martinez",
-      role: "Property Development Advisor",
-      experience: "15+ years",
-      specialties: ["New Developments", "Land Acquisition"],
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
+      name: "Muhammad Iqbal Asim",
+      role: "Residential and Commercial Rent Expert",
+      experience: "6+ years",
+      specialties: ["Residential Properties", "Commercial Rentals"],
+      image: "/lovable-uploads/IQBAL PP.png"
     },
     {
-      name: "Lisa Anderson",
+      name: "Muhammad Naeem",
       role: "Residential Sales Manager",
       experience: "9+ years",
       specialties: ["Family Homes", "Relocation Services"],
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face"
+      image: "/lovable-uploads/NAEEM PP.png"
     }
   ];
 
@@ -113,7 +113,7 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&h=400&fit=crop"
+                src="/lovable-uploads/Aboutmain.png"
                 alt="Property Point Office"
                 className="rounded-lg shadow-xl"
               />
