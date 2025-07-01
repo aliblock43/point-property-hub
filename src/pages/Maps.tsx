@@ -9,8 +9,8 @@ const Maps = () => {
 
   // Sample map images from Unsplash - using map/geography related images
   const mapImages = [
-    "public/lovable-uploads/PHASE1-5.jpg",
-    "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=800&fit=crop",
+    "/lovable-uploads/PHASE1-5.jpg",
+    "/lovable-uploads/PHASE6+7+2.jpg",
     "https://images.unsplash.com/photo-1606137733433-976997b4a91b?w=1200&h=800&fit=crop",
     "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=1200&h=800&fit=crop",
     "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=800&fit=crop",
