@@ -10,17 +10,17 @@ const Maps = () => {
   // Sample map images from Unsplash - using map/geography related images
   const mapImages = [
     "/lovable-uploads/PHASE1-5.jpg",
-    "/lovable-uploads/PHASE6+7+2.jpg",
-    "https://images.unsplash.com/photo-1606137733433-976997b4a91b?w=1200&h=800&fit=crop",
-    "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=1200&h=800&fit=crop",
-    "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=800&fit=crop",
-    "https://images.unsplash.com/photo-1597149962419-0d90ac2e3db4?w=1200&h=800&fit=crop&sat=-30",
-    "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=800&fit=crop&sat=-30",
-    "https://images.unsplash.com/photo-1606137733433-976997b4a91b?w=1200&h=800&fit=crop&sat=-30",
-    "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=1200&h=800&fit=crop&sat=-30",
-    "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=800&fit=crop&sat=-30",
-    "https://images.unsplash.com/photo-1597149962419-0d90ac2e3db4?w=1200&h=800&fit=crop&hue=30",
-    "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=800&fit=crop&hue=30"
+    "/lovable-uploads/PHASE6.jpg",
+    "/lovable-uploads/PHASE8.jpg",
+    "/lovable-uploads/PHASE9.jpg",
+    "/lovable-uploads/DHABWP.jpg",
+    "/lovable-uploads/IVYGREEN.jpg",
+    "/lovable-uploads/IXTOWN.jpg",
+    "/lovable-uploads/DHAMUL.jpg",
+    "/lovable-uploads/PARAGON.jpg",
+    "/lovable-uploads/DHAQUE.jpg",
+    "/lovable-uploads/DHAEME.jpg",,
+    "/lovable-uploads/DHACOMMERCIAL.jpg",
   ];
 
   const handleDownload = (mapIndex: number) => {
@@ -65,7 +65,6 @@ const Maps = () => {
                     />
                   </div>
                   <div className="p-4">
-                    <h4 className= "text-xl font-semibold text-gray-900 mb-3">Lahore</h4>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">
                       Map {index + 1}
                     </h3>
