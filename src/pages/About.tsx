@@ -33,28 +33,28 @@ const About = () => {
       role: "House Sale Expert",
       experience: "8+ years",
       specialties: ["Houses", "Appartments",],
-      image: "/lovable-uploads/SHRAFATPP.png"
+      image: "/lovable-uploads/PP32.png"
     },
     {
       name: "Zarrar Malik",
       role: "House Sale Expert",
       experience: "7+ years",
       specialties: ["Houses", "High-end Properties"],
-      image: "/lovable-uploads/ZARARPP.png"
+      image: "/lovable-uploads/PP33.png"
     },
     {
       name: "Muhammad Iqbal Asim",
       role: "Residential and Commercial Rent Expert",
       experience: "6+ years",
       specialties: ["Residential Properties", "Commercial Rentals"],
-      image: "/lovable-uploads/IQBALPP.png"
+      image: "/lovable-uploads/PP34.png"
     },
     {
       name: "Muhammad Naeem",
       role: "Residential Sales Manager",
       experience: "9+ years",
       specialties: ["Family Homes", "Relocation Services"],
-      image: "/lovable-uploads/NAEEMPP.png"
+      image: "/lovable-uploads/PP35.png"
     }
   ];
 
@@ -113,7 +113,7 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src="/lovable-uploads/Aboutmain.png"
+                src="/lovable-uploads/Aboutmain.jpg"
                 alt="Property Point Office"
                 className="rounded-lg shadow-xl"
               />
