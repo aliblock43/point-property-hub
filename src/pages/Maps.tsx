@@ -19,14 +19,30 @@ const Maps = () => {
     "/lovable-uploads/DHAMUL.jpg",
     "/lovable-uploads/PARAGON.jpg",
     "/lovable-uploads/DHAQUE.jpg",
-    "/lovable-uploads/DHAEME.jpg",,
+    "/lovable-uploads/DHAEME.jpg",
     "/lovable-uploads/DHACOMMERCIAL.jpg",
+  ];
+
+  // Custom headings for each map
+  const mapHeadings = [
+    "Phase 1-5",
+    "Phase 6", 
+    "Phase 8",
+    "Phase 9",
+    "DHA Bahawalpur",
+    "IVY GREEN",
+    "IX TOWN",
+    "DHA Multan",
+    "Paragon",
+    "DHA Quetta",
+    "DHA EME",
+    "DHA Commercial"
   ];
 
   const handleDownload = (mapIndex: number) => {
     const link = document.createElement("a");
     link.href = mapImages[mapIndex];
-    link.download = `map-${mapIndex + 1}.jpg`;
+    link.download = `${mapHeadings[mapIndex]}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -59,14 +75,14 @@ const Maps = () => {
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={imageUrl}
-                      alt={`Map ${index + 1}`}
+                      alt={mapHeadings[index]}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      Map {index + 1}
+                      {mapHeadings[index]}
                     </h3>
                     <Button
                       onClick={(e) => {
@@ -85,7 +101,7 @@ const Maps = () => {
               <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-auto">
                 <DialogHeader>
                   <DialogTitle className="text-xl font-semibold text-gray-900">
-                    Map {index + 1}
+                    {mapHeadings[index]}
                   </DialogTitle>
                 </DialogHeader>
                 
@@ -93,7 +109,7 @@ const Maps = () => {
                   <div className="aspect-[4/3] w-full overflow-hidden rounded-lg">
                     <img
                       src={imageUrl}
-                      alt={`Map ${index + 1} - Full Size`}
+                      alt={`${mapHeadings[index]} - Full Size`}
                       className="w-full h-full object-contain bg-gray-50"
                     />
                   </div>
@@ -104,7 +120,7 @@ const Maps = () => {
                       className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-3"
                     >
                       <Download className="w-5 h-5 mr-2" />
-                      Download Map {index + 1}
+                      Download {mapHeadings[index]}
                     </Button>
                   </div>
                 </div>
