@@ -25,15 +25,10 @@ const RealtimeAdminProperties = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Fetch initial properties - commented out until properties table exists
-    // fetchProperties();
+    // Fetch initial properties
+    fetchProperties();
 
-    // Mock data for now
-    setProperties([]);
-    setLoading(false);
-
-    // Set up real-time subscription - commented out until table exists
-    /*
+    // Set up real-time subscription
     const channel = supabase
       .channel('admin-properties-changes')
       .on(
@@ -79,13 +74,10 @@ const RealtimeAdminProperties = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-    */
   }, [toast]);
 
   const fetchProperties = async () => {
     try {
-      // Commented out until properties table exists
-      /*
       const { data, error } = await supabase
         .from('properties')
         .select('*')
@@ -93,7 +85,6 @@ const RealtimeAdminProperties = () => {
 
       if (error) throw error;
       setProperties(data || []);
-      */
     } catch (error) {
       console.error('Error fetching properties:', error);
       toast({
@@ -108,15 +99,12 @@ const RealtimeAdminProperties = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      // Commented out until properties table exists
-      /*
       const { error } = await supabase
         .from('properties')
         .delete()
         .eq('id', id);
 
       if (error) throw error;
-      */
     } catch (error) {
       console.error('Error deleting property:', error);
       toast({

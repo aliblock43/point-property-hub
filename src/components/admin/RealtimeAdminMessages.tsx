@@ -25,15 +25,10 @@ const RealtimeAdminMessages = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Fetch initial messages - commented out until contact_messages table exists
-    // fetchMessages();
+    // Fetch initial messages
+    fetchMessages();
 
-    // Mock data for now
-    setMessages([]);
-    setLoading(false);
-
-    // Set up real-time subscription - commented out until table exists
-    /*
+    // Set up real-time subscription
     const channel = supabase
       .channel('admin-messages-changes')
       .on(
@@ -75,13 +70,10 @@ const RealtimeAdminMessages = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-    */
   }, [toast]);
 
   const fetchMessages = async () => {
     try {
-      // Commented out until contact_messages table exists
-      /*
       const { data, error } = await supabase
         .from('contact_messages')
         .select('*')
@@ -89,7 +81,6 @@ const RealtimeAdminMessages = () => {
 
       if (error) throw error;
       setMessages(data || []);
-      */
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
@@ -104,15 +95,12 @@ const RealtimeAdminMessages = () => {
 
   const markAsRead = async (id: string) => {
     try {
-      // Commented out until contact_messages table exists
-      /*
       const { error } = await supabase
         .from('contact_messages')
         .update({ status: 'read' })
         .eq('id', id);
 
       if (error) throw error;
-      */
     } catch (error) {
       console.error('Error marking message as read:', error);
     }
@@ -120,15 +108,12 @@ const RealtimeAdminMessages = () => {
 
   const deleteMessage = async (id: string) => {
     try {
-      // Commented out until contact_messages table exists
-      /*
       const { error } = await supabase
         .from('contact_messages')
         .delete()
         .eq('id', id);
 
       if (error) throw error;
-      */
     } catch (error) {
       console.error('Error deleting message:', error);
       toast({

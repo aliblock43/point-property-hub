@@ -1,328 +1,650 @@
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import type { CarouselApi } from "@/components/ui/carousel";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import Autoplay from 'embla-carousel-autoplay'
+const Index = () => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [certificateApi, setCertificateApi] = useState<CarouselApi>();
+  const [currentCertificate, setCurrentCertificate] = useState(0);
 
-const images = [
-  "/lovable-uploads/slider-1.jpg",
-  "/lovable-uploads/slider-2.jpg",
-  "/lovable-uploads/slider-3.jpg",
-  "/lovable-uploads/slider-4.jpg",
-  "/lovable-uploads/slider-5.jpg",
-];
+  const heroSlides = [{
+    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
+    title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
+    subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
+    cta: "Explore Properties"
+  }, {
+    image: "/lovable-uploads/579a50ca-0240-45a7-a77c-d35e4681f608.png",
+    title: "DHA MULTAN PLOTS, FILES, COMMERCIAL PROPERTIES",
+    subtitle: "Professional guidance and personalized service for all your property investment needs",
+    cta: "Get Started"
+  }, {
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
+    title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
+    subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
+    cta: "View Luxury Properties"
+  }];
 
-const testimonials = [
-  {
-    name: "Alice Johnson",
-    title: "Happy Homeowner",
-    comment: "Thanks to Lovable Properties, I found my dream home in just a few weeks! Their team was incredibly helpful and responsive.",
-    image: "/lovable-uploads/test-1.jpg",
-  },
-  {
-    name: "Bob Williams",
-    title: "Real Estate Investor",
-    comment: "Lovable Properties provided me with excellent investment opportunities. Their market knowledge and negotiation skills are top-notch.",
-    image: "/lovable-uploads/test-2.jpg",
-  },
-  {
-    name: "Charlie Brown",
-    title: "First-Time Buyer",
-    comment: "I was nervous about buying my first property, but Lovable Properties made the process smooth and easy. I highly recommend them!",
-    image:"/lovable-uploads/test-3.jpg",
-  },
-];
-
-const newUpdates = [
-  {
-    title: "New Property Listings Available",
-    date: "January 2025",
-    description: "We've added 50+ new premium properties to our portfolio in prime locations across the city.",
-  },
-  {
-    title: "Digital Property Tours Launched",
-    date: "December 2024",
-    description: "Experience properties virtually with our new 360-degree digital tour technology.",
-  },
-  {
-    title: "Extended Office Hours",
-    date: "November 2024",
-    description: "We're now available 7 days a week to better serve our clients' needs.",
-  },
-];
-
-const certifications = [
-  {
-    title: "Real Estate Excellence Award 2024",
-    organization: "National Real Estate Association",
-    description: "Recognized for outstanding service and client satisfaction.",
-  },
-  {
-    title: "Top Property Dealer Certification",
-    organization: "Regional Property Board",
-    description: "Certified as the leading property dealer in the region.",
-  },
-  {
-    title: "Customer Service Excellence",
-    organization: "Business Excellence Council",
-    description: "Awarded for maintaining highest standards of customer service.",
-  },
-];
-
-export default function Index() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  // Auto-play functionality for hero slider
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
+    if (!api) {
+      return;
+    }
+    const autoPlay = setInterval(() => {
+      api.scrollNext();
+    }, 5000); // Change slide every 5 seconds
 
-    return () => clearInterval(timer);
-  }, [images.length]);
+    return () => clearInterval(autoPlay);
+  }, [api]);
 
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section with Slider */}
-      <section className="relative h-[70vh] md:h-[85vh] w-full overflow-hidden">
-        <Carousel
-          plugins={[
-            Autoplay({
-              delay: 5000,
-            }),
-          ]}
-          className="w-full h-full relative"
-          opts={{
-            loop: true,
-          }}
-        >
-          <CarouselContent className="h-full">
-            {images.map((image, index) => (
-              <CarouselItem key={index} className="relative h-full">
-                <div className="relative h-full w-full">
-                  <img
-                    src={image}
-                    alt={`Real Estate Slide ${index + 1}`}
-                    className="object-cover w-full h-full"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-black opacity-40"></div>
-                  <div className="absolute inset-0 flex items-center justify-center text-center text-white z-10">
-                    <div className="max-w-4xl px-4">
-                      <h1 className="text-3xl md:text-5xl font-bold mb-4">
-                        Discover Your Dream Property
-                      </h1>
-                      <p className="text-lg md:text-xl mb-8">
-                        We offer a wide range of properties to suit every need and budget.
-                      </p>
-                      <Button size="lg">
-                        Explore Properties <ArrowRight className="ml-2" />
-                      </Button>
+  // Track current slide
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  // Certificate carousel tracking
+  useEffect(() => {
+    if (!certificateApi) {
+      return;
+    }
+    setCurrentCertificate(certificateApi.selectedScrollSnap());
+    certificateApi.on("select", () => {
+      setCurrentCertificate(certificateApi.selectedScrollSnap());
+    });
+  }, [certificateApi]);
+
+  const featuredProperties = [
+    {
+      id: 1,
+      slug: "luxury-downtown-condo",
+      title: "Luxury Downtown Condo",
+      price: 850000,
+      location: "Downtown, Property City",
+      type: "Apartment",
+      bedrooms: 2,
+      bathrooms: 2,
+      area: 1200,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
+      featured: true
+    }, {
+      id: 2,
+      slug: "suburban-family-home",
+      title: "Suburban Family Home",
+      price: 675000,
+      location: "Oakwood Suburbs",
+      type: "House",
+      bedrooms: 4,
+      bathrooms: 3,
+      area: 2400,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
+      featured: true
+    }, {
+      id: 3,
+      slug: "modern-loft-apartment",
+      title: "Modern Loft Apartment",
+      price: 520000,
+      location: "Arts District",
+      type: "Apartment",
+      bedrooms: 1,
+      bathrooms: 1,
+      area: 800,
+      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop",
+      featured: true
+    }];
+  const services = [
+    {
+      icon: <ShoppingCart className="w-12 h-12 text-orange-600" />,
+      title: "Buying",
+      description: "Get in touch with Property Point for buying a property and we will provide you a number of options in accordance of your budget and preferred locality. Guiding you with the most suitable choice for your needs is our top priority as we are committed to serve you with the very best."
+    }, {
+      icon: <Home className="w-12 h-12 text-orange-600" />,
+      title: "Selling Property",
+      description: "Contact us to evaluate your property's value and we will also connect you with serious buyers upon your request. Sell your property with our assistance as we advertise it to the masses on various digital channels to make it a lot easier for you."
+    }, {
+      icon: <MessageCircle className="w-12 h-12 text-orange-600" />,
+      title: "Chat us",
+      description: "Either buying, selling a property or looking for an investment, proper consultation is required to take the right decision at the right time. Contact any of our highly experienced realtors for free and reliable real estate consultancy to step forward in the right direction."
+    }];
+  const teamMembers = [{
+    name: "Umer Shahid",
+    role: "Chief Executive Officer",
+    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
+    experience: "12+ Years Experience",
+    specialization: "Luxury Properties",
+    sales: "500+ Properties Sold",
+    rating: 4.9
+  }, {
+    name: "Adil Ilyas",
+    role: "Director of Sales and Business Development",
+    image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png",
+    experience: "6+ Years Experience",
+    specialization: "Investment Properties",
+    sales: "750+ Properties Sold",
+    rating: 4.8
+  }, {
+    name: "Shahid Iqbal Zia",
+    role: "Managing Director",
+    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png",
+    experience: "8+ Years Experience",
+    specialization: "Commercial Real Estate",
+    sales: "650+ Properties Sold",
+    rating: 4.9
+  }];
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "First-time Buyer",
+      content: "Property Point made buying my first home so easy. Their team was professional and guided me through every step.",
+      rating: 5
+    }, {
+      name: "Mike Chen",
+      role: "Property Investor",
+      content: "I've worked with many real estate agencies, but Property Point stands out for their market knowledge and professionalism.",
+      rating: 5
+    }, {
+      name: "Emily Rodriguez",
+      role: "Home Seller",
+      content: "They sold my house in just 2 weeks! Amazing service and great communication throughout the process.",
+      rating: 5
+    }];
+  const certificates = [
+    {
+      id: 1,
+      title: "Real Estate Excellence Award",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=800&fit=crop",
+      description: "Outstanding Achievement in Real Estate Services"
+    },
+    {
+      id: 2,
+      title: "Professional Certification",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=800&fit=crop",
+      description: "Certified Real Estate Professional"
+    },
+    {
+      id: 3,
+      title: "Certificate of Appreciation",
+      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
+      description: "Recognition for Outstanding Performance"
+    }
+  ];
+
+  return <div className="min-h-screen">
+      {/* Enhanced Auto-Moving Hero Slider Section */}
+      <section className="relative">
+        <Carousel className="w-full" opts={{
+        loop: true
+      }} setApi={setApi}>
+          <CarouselContent>
+            {heroSlides.map((slide, index) => <CarouselItem key={index}>
+                <div className="relative h-screen">
+                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                  {/* Enhanced overlay with gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+                  
+                  {/* Hero Content */}
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                      <div className="max-w-4xl">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in">
+                          {slide.title}
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed animate-fade-in">
+                          {slide.subtitle}
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 animate-fade-in">
+                          <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transition-all duration-300 hover:scale-105">
+                            <Link to="/properties">
+                              {slide.cta}
+                              <ArrowRight className="w-5 h-5 ml-2" />
+                            </Link>
+                          </Button>
+                          <Button asChild variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
+                            <Link to="/contact">
+                              Contact Us
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slide indicators */}
+                  <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                    <div className="flex space-x-3">
+                      {heroSlides.map((_, slideIndex) => <button key={slideIndex} onClick={() => api?.scrollTo(slideIndex)} className={`w-3 h-3 rounded-full transition-all duration-300 ${slideIndex === current ? 'bg-orange-600 w-8' : 'bg-white/50 hover:bg-white/70'}`} />)}
                     </div>
                   </div>
                 </div>
-              </CarouselItem>
-            ))}
+              </CarouselItem>)}
           </CarouselContent>
-          <CarouselPrevious className="left-4 top-1/2 transform -translate-y-1/2 z-20" />
-          <CarouselNext className="right-4 top-1/2 transform -translate-y-1/2 z-20" />
         </Carousel>
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Our Services
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We provide comprehensive real estate services to help you buy, sell, or rent properties with ease.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive real estate solutions tailored to your unique needs
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Service 1 */}
-            <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Property Sales</h3>
-              <p className="text-gray-600">
-                We assist you in selling your property at the best possible price, with expert marketing and negotiation strategies.
-              </p>
-            </div>
 
-            {/* Service 2 */}
-            <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Property Rentals</h3>
-              <p className="text-gray-600">
-                Find the perfect rental property with our extensive listings and dedicated support. We make renting easy and stress-free.
-              </p>
-            </div>
-
-            {/* Service 3 */}
-            <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Property Management</h3>
-              <p className="text-gray-600">
-                Our property management services ensure your investment is well-maintained and generates consistent income.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {services.map((service, index) => <Card key={index} className="p-8 text-center hover:shadow-2xl transition-all duration-300 border-orange-100 hover:border-orange-200 group transform hover:-translate-y-2">
+                <CardContent className="p-0">
+                  <div className="flex justify-center mb-8">
+                    <div className="p-4 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors duration-300">
+                      {service.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed text-lg">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>)}
           </div>
         </div>
       </section>
 
       {/* New Updates Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              New Updates
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Stay informed about our latest developments and improvements in our real estate services.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newUpdates.map((update, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-                <div className="text-orange-600 text-sm font-semibold mb-2">{update.date}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{update.title}</h3>
-                <p className="text-gray-600">{update.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our Certifications and Awards Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Certifications and Awards
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Recognition of our commitment to excellence and outstanding service in the real estate industry.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {certifications.map((cert, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full"></div>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{cert.title}</h3>
-                <p className="text-orange-600 font-medium mb-3">{cert.organization}</p>
-                <p className="text-gray-600 text-sm">{cert.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Meet Our Expert Team
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Our experienced real estate professionals are here to help you navigate the property market
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Agent 1 */}
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
-              <img
-                src="/src/assets/images/shahid-iqbal-zia.png"
-                alt="Shahid Iqbal Zia"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Shahid Iqbal Zia</h3>
-              <p className="text-orange-600 mb-3">Senior Real Estate Agent</p>
-              <p className="text-gray-600 text-sm">
-                With over 10 years of experience in luxury properties and commercial real estate.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                New Updates
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">Congratulations to everyone DHA Announced a possession in phase 8 S, T, U, V, W and Y Blocks except X and Y2. Possession Ceremony was held in DHA Lahore Phase 8, W Block. It is the biggest sign to buy plots in DHA phase 8 and the reason that its price are expected to go upwards. We are highly recommended to buy plots in DHA Lahore phase 8. DHA Lahore phase 8 X Block and Y2 Block possession announced within 6 months. Once again Congratulations to everyone phase 8 possession officially announced by DHA Lahore.</p>
+              <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/blog">
+                  Read More Updates
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
             </div>
 
-            {/* Agent 2 */}
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
-              <img
-                src="/src/assets/images/umer-shahid.png"
-                alt="Umer Shahid"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Umer Shahid</h3>
-              <p className="text-orange-600 mb-3">Property Investment Specialist</p>
-              <p className="text-gray-600 text-sm">
-                Expert in residential properties and investment opportunities with proven track record.
-              </p>
-            </div>
-
-            {/* Agent 3 */}
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300 pt-12">
-              <img
-                src="/src/assets/images/adil-ilyas.png"
-                alt="Adil Ilyas"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Adil Ilyas</h3>
-              <p className="text-orange-600 mb-3">Commercial Real Estate Expert</p>
-              <p className="text-gray-600 text-sm">
-                Specializes in commercial properties and business real estate solutions.
-              </p>
+            {/* Right side - YouTube video */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
+                <div className="aspect-video">
+                  <iframe src="https://www.youtube.com/embed/6V4fvoLttp0" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                </div>
+                {/* Play button overlay - optional decorative element */}
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="bg-white/20 rounded-full p-4">
+                    <Play className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-200 rounded-full opacity-60"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-100 rounded-full opacity-40"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 bg-white">
+      {/* Featured Properties */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What Our Clients Say
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Featured Properties
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Read what our satisfied clients have to say about their experience with Lovable Properties.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover our handpicked selection of premium properties in the most sought-after locations.
             </p>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="relative">
+                  <img src={property.image} alt={property.title} className="w-full h-64 object-cover" />
+                  <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
+                    Featured
+                  </Badge>
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-semibold text-gray-900">{property.title}</h3>
+                    <span className="text-2xl font-bold text-orange-600">
+                      ${property.price.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center text-gray-600 mb-4">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    <span>{property.location}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div className="flex items-center">
+                      <Bed className="w-4 h-4 mr-1" />
+                      <span>{property.bedrooms} bed</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Bath className="w-4 h-4 mr-1" />
+                      <span>{property.bathrooms} bath</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Square className="w-4 h-4 mr-1" />
+                      <span>{property.area} sqft</span>
+                    </div>
+                  </div>
+                  <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
+                    <Link to={`/properties/${property.slug}`}>
+                      View Details
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>)}
+          </div>
+
+          <div className="text-center mt-12">
+            <Button asChild variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto">
+              <Link to="/properties">
+                View All Properties
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Redesigned Our Team Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Meet Our Expert Team
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Our dedicated professionals bring years of experience and deep market knowledge to help you achieve your real estate goals.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">{testimonial.name}</h4>
-                <p className="text-orange-600 mb-3">{testimonial.title}</p>
-                <p className="text-gray-600 italic text-sm">"{testimonial.comment}"</p>
+            {teamMembers.map((member, index) => <div key={index} className="group">
+                <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 bg-white border-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 to-orange-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <CardContent className="p-0 relative">
+                    {/* Image Section */}
+                    <div className="relative overflow-hidden">
+                      <img src={member.image} alt={member.name} className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      
+                      {/* Rating Badge */}
+                      <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                        <Star className="w-4 h-4 mr-1 fill-current" />
+                        {member.rating}
+                      </div>
+                    </div>
+                    
+                    {/* Content Section */}
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">
+                        {member.name}
+                      </h3>
+                      <p className="text-orange-600 font-semibold text-lg mb-4">
+                        {member.role}
+                      </p>
+                      
+                      {/* Stats Grid */}
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="text-center p-3 bg-orange-50 rounded-lg">
+                          <div className="flex items-center justify-center mb-2">
+                            <Award className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <p className="text-sm font-semibold text-gray-700">{member.experience}</p>
+                        </div>
+                        <div className="text-center p-3 bg-orange-50 rounded-lg">
+                          <div className="flex items-center justify-center mb-2">
+                            <TrendingUp className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <p className="text-sm font-semibold text-gray-700">{member.sales}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Specialization */}
+                      <div className="mb-6">
+                        <p className="text-sm text-gray-500 mb-1">Specialization</p>
+                        <p className="font-semibold text-gray-800">{member.specialization}</p>
+                      </div>
+                      
+                      {/* Contact Button */}
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700 transform transition-all duration-300 group-hover:scale-105">
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Contact {member.name.split(' ')[0]}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>)}
+          </div>
+          
+          {/* Team CTA */}
+          <div className="text-center mt-16">
+            <div className="bg-white rounded-2xl p-8 shadow-xl border border-orange-100">
+              <div className="flex items-center justify-center mb-4">
+                <Users2 className="w-12 h-12 text-orange-600" />
               </div>
-            ))}
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Ready to Work with Our Team?
+              </h3>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Our experienced professionals are here to guide you through every step of your real estate journey.
+              </p>
+              <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/contact">
+                  Get Started Today
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certificates Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Information */}
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Our Certifications & Awards
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Property Point has been recognized for excellence in real estate services. Our certifications and awards demonstrate our commitment to providing the highest quality service to our clients and maintaining professional standards in the industry.
+              </p>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start space-x-3">
+                  <Award className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Professional Excellence</h3>
+                    <p className="text-gray-600">Certified by leading real estate organizations</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <Star className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Industry Recognition</h3>
+                    <p className="text-gray-600">Award-winning service and customer satisfaction</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <TrendingUp className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Market Leadership</h3>
+                    <p className="text-gray-600">Leading performance in local real estate market</p>
+                  </div>
+                </div>
+              </div>
+              <Button asChild className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto">
+                <Link to="/about">
+                  Learn More About Us
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Right side - Certificate Carousel */}
+            <div className="relative">
+              <Carousel className="w-full max-w-md mx-auto" setApi={setCertificateApi}>
+                <CarouselContent>
+                  {certificates.map((certificate) => (
+                    <CarouselItem key={certificate.id}>
+                      <Card className="border-0 shadow-2xl overflow-hidden bg-white">
+                        <CardContent className="p-0">
+                          <div className="relative">
+                            <img
+                              src={certificate.image}
+                              alt={certificate.title}
+                              className="w-full h-96 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                              <h3 className="text-xl font-bold mb-2">{certificate.title}</h3>
+                              <p className="text-gray-200">{certificate.description}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                
+                {/* Custom Navigation Buttons */}
+                <button
+                  onClick={() => certificateApi?.scrollPrev()}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-orange-600 p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => certificateApi?.scrollNext()}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-orange-600 p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </Carousel>
+
+              {/* Certificate indicators */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {certificates.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => certificateApi?.scrollTo(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentCertificate 
+                        ? 'bg-orange-600 w-8' 
+                        : 'bg-orange-200 hover:bg-orange-300'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-200 rounded-full opacity-60"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-100 rounded-full opacity-40"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics */}
+      <section className="py-20 bg-orange-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="transform hover:scale-105 transition-transform duration-300">
+              <div className="text-5xl font-bold mb-4">500+</div>
+              <div className="text-orange-200 text-lg">Properties Sold</div>
+            </div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
+              <div className="text-5xl font-bold mb-4">1000+</div>
+              <div className="text-orange-200 text-lg">Happy Clients</div>
+            </div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
+              <div className="text-5xl font-bold mb-4">15+</div>
+              <div className="text-orange-200 text-lg">Years Experience</div>
+            </div>
+            <div className="transform hover:scale-105 transition-transform duration-300">
+              <div className="text-5xl font-bold mb-4">50+</div>
+              <div className="text-orange-200 text-lg">Expert Agents</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              What Our Clients Say
+            </h2>
+            <p className="text-xl text-gray-600">
+              Don't just take our word for it - hear from our satisfied clients.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => <Card key={index} className="p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-orange-100">
+                <CardContent className="p-0">
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-5 h-5 text-orange-400 fill-current" />)}
+                  </div>
+                  <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
+                  <div>
+                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                    <div className="text-sm text-orange-600">{testimonial.role}</div>
+                  </div>
+                </CardContent>
+              </Card>)}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-orange-500 to-orange-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Find Your Perfect Property?
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to Find Your Dream Property?
           </h2>
-          <p className="text-xl mb-8">
-            Contact us today to start your real estate journey with Lovable Properties.
+          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+            Let our expert team help you navigate the real estate market and find the perfect property for your needs.
           </p>
-          <Button size="lg" variant="secondary">
-            Contact Us <ArrowRight className="ml-2" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-4 h-auto transform transition-all duration-300 hover:scale-105">
+              <Link to="/properties">Browse Properties</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="bg-white text-orange-600 border-white hover:bg-orange-600 hover:text-white text-lg px-8 py-4 h-auto transition-all duration-300">
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
         </div>
       </section>
-    </div>
-  );
-}
+    </div>;
+};
+
+export default Index;
