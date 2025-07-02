@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -40,15 +41,51 @@ const testimonials = [
   },
 ];
 
+const newUpdates = [
+  {
+    title: "New Property Listings Available",
+    date: "January 2025",
+    description: "We've added 50+ new premium properties to our portfolio in prime locations across the city.",
+  },
+  {
+    title: "Digital Property Tours Launched",
+    date: "December 2024",
+    description: "Experience properties virtually with our new 360-degree digital tour technology.",
+  },
+  {
+    title: "Extended Office Hours",
+    date: "November 2024",
+    description: "We're now available 7 days a week to better serve our clients' needs.",
+  },
+];
+
+const certifications = [
+  {
+    title: "Real Estate Excellence Award 2024",
+    organization: "National Real Estate Association",
+    description: "Recognized for outstanding service and client satisfaction.",
+  },
+  {
+    title: "Top Property Dealer Certification",
+    organization: "Regional Property Board",
+    description: "Certified as the leading property dealer in the region.",
+  },
+  {
+    title: "Customer Service Excellence",
+    organization: "Business Excellence Council",
+    description: "Awarded for maintaining highest standards of customer service.",
+  },
+];
+
 export default function Index() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
 
-    return () => clearInterval(timer); // Clean up the interval on component unmount
+    return () => clearInterval(timer);
   }, [images.length]);
 
   return (
@@ -61,32 +98,35 @@ export default function Index() {
               delay: 5000,
             }),
           ]}
-          className="w-full max-w-full relative"
+          className="w-full h-full relative"
           opts={{
             loop: true,
           }}
         >
-          <CarouselContent className="-ml-1 md:ml-0">
+          <CarouselContent className="h-full">
             {images.map((image, index) => (
-              <CarouselItem key={index} className="md:basis-1/1">
-                <div className="p-1 md:p-0">
+              <CarouselItem key={index} className="relative h-full">
+                <div className="relative h-full w-full">
                   <img
                     src={image}
                     alt={`Real Estate Slide ${index + 1}`}
-                    className="object-cover w-full h-[70vh] md:h-[85vh]"
+                    className="object-cover w-full h-full"
+                    loading="eager"
                   />
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-10">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-4">
-                      Discover Your Dream Property
-                    </h1>
-                    <p className="text-lg md:text-xl mb-8">
-                      We offer a wide range of properties to suit every need and budget.
-                    </p>
-                    <Button size="lg">
-                      Explore Properties <ArrowRight className="ml-2" />
-                    </Button>
-                  </div>
                   <div className="absolute inset-0 bg-black opacity-40"></div>
+                  <div className="absolute inset-0 flex items-center justify-center text-center text-white z-10">
+                    <div className="max-w-4xl px-4">
+                      <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                        Discover Your Dream Property
+                      </h1>
+                      <p className="text-lg md:text-xl mb-8">
+                        We offer a wide range of properties to suit every need and budget.
+                      </p>
+                      <Button size="lg">
+                        Explore Properties <ArrowRight className="ml-2" />
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </CarouselItem>
             ))}
@@ -135,6 +175,55 @@ export default function Index() {
         </div>
       </section>
 
+      {/* New Updates Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              New Updates
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Stay informed about our latest developments and improvements in our real estate services.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {newUpdates.map((update, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <div className="text-orange-600 text-sm font-semibold mb-2">{update.date}</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{update.title}</h3>
+                <p className="text-gray-600">{update.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Certifications and Awards Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Certifications and Awards
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Recognition of our commitment to excellence and outstanding service in the real estate industry.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {certifications.map((cert, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 text-center">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full"></div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{cert.title}</h3>
+                <p className="text-orange-600 font-medium mb-3">{cert.organization}</p>
+                <p className="text-gray-600 text-sm">{cert.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -175,7 +264,7 @@ export default function Index() {
               </p>
             </div>
 
-            {/* Agent 3 - Added padding-top */}
+            {/* Agent 3 */}
             <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300 pt-12">
               <img
                 src="/src/assets/images/adil-ilyas.png"
