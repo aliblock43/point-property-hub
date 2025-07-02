@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -74,31 +73,19 @@ const RealtimeAdminMessages = () => {
 
   const fetchMessages = async () => {
     try {
-      // Check if the table exists by trying to query it
-      const { error } = await supabase
-        .from('contact_messages' as any)
-        .select('*')
-        .limit(1);
-
-      if (error) {
-        console.log('Contact messages table does not exist yet');
-        setMessages([]);
-        setLoading(false);
-        return;
-      }
-
-      const { data, error: fetchError } = await supabase
-        .from('contact_messages' as any)
+      const { data, error } = await supabase
+        .from('contact_messages')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (fetchError) throw fetchError;
+      if (error) throw error;
       setMessages(data || []);
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
-        title: "Info",
-        description: "Contact messages feature is not set up yet. This is normal for new projects.",
+        title: "Error",
+        description: "Failed to fetch messages. This is expected if the contact_messages table doesn't exist yet.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -108,7 +95,7 @@ const RealtimeAdminMessages = () => {
   const markAsRead = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('contact_messages' as any)
+        .from('contact_messages')
         .update({ status: 'read' })
         .eq('id', id);
 
@@ -121,7 +108,7 @@ const RealtimeAdminMessages = () => {
   const deleteMessage = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('contact_messages' as any)
+        .from('contact_messages')
         .delete()
         .eq('id', id);
 
