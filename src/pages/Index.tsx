@@ -164,13 +164,13 @@ const Index = () => {
     {
       id: 1,
       title: "Real Estate Excellence Award",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=800&fit=crop",
+      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
       description: "Outstanding Achievement in Real Estate Services"
     },
     {
       id: 2,
       title: "Professional Certification",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=800&fit=crop",
+      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
       description: "Certified Real Estate Professional"
     },
     {
