@@ -78,31 +78,19 @@ const RealtimeAdminProperties = () => {
 
   const fetchProperties = async () => {
     try {
-      // Check if the table exists by trying to query it
-      const { error } = await supabase
-        .from('properties' as any)
-        .select('*')
-        .limit(1);
-
-      if (error) {
-        console.log('Properties table does not exist yet');
-        setProperties([]);
-        setLoading(false);
-        return;
-      }
-
-      const { data, error: fetchError } = await supabase
-        .from('properties' as any)
+      const { data, error } = await supabase
+        .from('properties')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (fetchError) throw fetchError;
+      if (error) throw error;
       setProperties(data || []);
     } catch (error) {
       console.error('Error fetching properties:', error);
       toast({
-        title: "Info",
-        description: "Properties feature is not set up yet. This is normal for new projects.",
+        title: "Error",
+        description: "Failed to fetch properties. This is expected if the properties table doesn't exist yet.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -112,7 +100,7 @@ const RealtimeAdminProperties = () => {
   const handleDelete = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('properties' as any)
+        .from('properties')
         .delete()
         .eq('id', id);
 
