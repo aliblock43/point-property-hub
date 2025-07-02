@@ -25,18 +25,18 @@ const Maps = () => {
 
   // Custom headings for each map
   const mapHeadings = [
-    "Phase 1-5",
-    "Phase 6", 
-    "Phase 8",
-    "Phase 9",
-    "DHA Bahawalpur",
+    "PHASE 1",
+    "PHASE 6", 
+    "PHASE 8",
+    "PHASE 9",
+    "DHA BAHAWALPUR",
     "IVY GREEN",
     "IX TOWN",
-    "DHA Multan",
-    "Paragon",
-    "DHA Quetta",
+    "DHA MULTAN",
+    "PARAGON",
+    "DHA QUETTA",
     "DHA EME",
-    "DHA Commercial"
+    "DHA COMMERCIAL"
   ];
 
   const handleDownload = (mapIndex: number) => {
