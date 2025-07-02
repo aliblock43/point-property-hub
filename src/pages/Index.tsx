@@ -77,7 +77,7 @@ const Index = () => {
       bedrooms: 4,
       bathrooms: 5,
       area: "1 KANAL",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
+      image: "/lovable-uploads/HOUSE111.jpg",
       featured: true
     }, {
       id: 2,
@@ -89,7 +89,7 @@ const Index = () => {
       bedrooms: 4,
       bathrooms: 3,
       area: "1 KANAL",
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
+      image: "/lovable-uploads/HOUSE222.jpg",
       featured: true
     }, {
       id: 3,
@@ -101,7 +101,7 @@ const Index = () => {
       bedrooms: 3,
       bathrooms: 4,
       area: "1 KANAL",
-      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop",
+      image: "/lovable-uploads/HOUSE333.jpg",
       featured: true
     }];
   const services = [
