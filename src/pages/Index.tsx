@@ -119,7 +119,7 @@ const Index = () => {
       description: "Either buying, selling a property or looking for an investment, proper consultation is required to take the right decision at the right time. Contact any of our highly experienced realtors for free and reliable real estate consultancy to step forward in the right direction."
     }];
   const teamMembers = [{
-    name: "Umer Shahid",
+    name: "Umer Shahid Zia",
     role: "Chief Executive Officer",
     image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
     experience: "12+ Years Experience",
