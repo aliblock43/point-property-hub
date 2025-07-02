@@ -69,7 +69,7 @@ const Index = () => {
   const featuredProperties = [
     {
       id: 1,
-      slug: "luxury-downtown-condo",
+      // slug: "luxury-downtown-condo",
       title: "Luxury Downtown Condo",
       price: 850000,
       location: "Downtown, Property City",
@@ -81,7 +81,7 @@ const Index = () => {
       featured: true
     }, {
       id: 2,
-      slug: "suburban-family-home",
+      // slug: "suburban-family-home",
       title: "Suburban Family Home",
       price: 675000,
       location: "Oakwood Suburbs",
@@ -93,7 +93,7 @@ const Index = () => {
       featured: true
     }, {
       id: 3,
-      slug: "modern-loft-apartment",
+      // slug: "modern-loft-apartment",
       title: "Modern Loft Apartment",
       price: 520000,
       location: "Arts District",
