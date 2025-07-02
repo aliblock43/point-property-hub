@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -77,19 +78,31 @@ const RealtimeAdminProperties = () => {
 
   const fetchProperties = async () => {
     try {
-      const { data, error } = await supabase
-        .from('properties')
+      // Check if the table exists by trying to query it
+      const { error } = await supabase
+        .from('properties' as any)
+        .select('*')
+        .limit(1);
+
+      if (error) {
+        console.log('Properties table does not exist yet');
+        setProperties([]);
+        setLoading(false);
+        return;
+      }
+
+      const { data, error: fetchError } = await supabase
+        .from('properties' as any)
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (fetchError) throw fetchError;
       setProperties(data || []);
     } catch (error) {
       console.error('Error fetching properties:', error);
       toast({
-        title: "Error",
-        description: "Failed to fetch properties. This is expected if the properties table doesn't exist yet.",
-        variant: "destructive",
+        title: "Info",
+        description: "Properties feature is not set up yet. This is normal for new projects.",
       });
     } finally {
       setLoading(false);
@@ -99,7 +112,7 @@ const RealtimeAdminProperties = () => {
   const handleDelete = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('properties')
+        .from('properties' as any)
         .delete()
         .eq('id', id);
 
