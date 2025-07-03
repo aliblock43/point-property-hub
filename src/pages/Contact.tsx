@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,144 +16,148 @@ const Contact = () => {
     phone: "",
     subject: "",
     message: "",
-    inquiryType: ""
+    inquiry_type: "general"
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    // Handle form submission
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: "Visit Our Office",
-      content: "47MB Eden City Phase 8 Lahore",
-      link: "#"
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      content: "+92 321-8451083",
-      link: "tel:+923218451083"
-    },
-    {
-      icon: Mail,
-      title: "Email Us",
-      content: "propertypointestate@gmail.com",
-      link: "mailto:propertypointestate@gmail.com"
-    },
-    {
-      icon: Clock,
-      title: "Business Hours",
-      content: "Mon-Fri: 9AM-6PM, Sat: 10AM-4PM",
-      link: null
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([formData]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+        inquiry_type: "general"
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-gradient-to-r from-orange-600 to-orange-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Contact Us
-          </h1>
-          <p className="text-xl text-orange-100 max-w-2xl mx-auto">
-            Ready to start your real estate journey? Get in touch with our expert team today.
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Contact Us</h1>
+          <p className="text-lg text-gray-600">
+            Get in touch with our real estate experts. We're here to help you find your dream property.
           </p>
         </div>
-      </section>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <div className="lg:col-span-1 space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Get in Touch
-              </h2>
-              <p className="text-gray-600 mb-6">
-                We're here to help you with all your real estate needs. Contact us today to speak with one of our experienced agents.
-              </p>
-            </div>
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <MapPin className="w-5 h-5 mr-2" />
+                  Visit Our Office
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  123 Real Estate Street<br />
+                  Property City, PC 12345<br />
+                  United States
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <Card key={index} className="p-4">
-                  <CardContent className="p-0">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <info.icon className="w-6 h-6 text-orange-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-1">
-                          {info.title}
-                        </h3>
-                        {info.link ? (
-                          <a
-                            href={info.link}
-                            className="text-gray-600 hover:text-orange-600 transition-colors"
-                          >
-                            {info.content}
-                          </a>
-                        ) : (
-                          <p className="text-gray-600">{info.content}</p>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Phone className="w-5 h-5 mr-2" />
+                  Call Us
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  Main: (555) 123-4567<br />
+                  Mobile: (555) 987-6543
+                </p>
+              </CardContent>
+            </Card>
 
-            {/* Quick Actions */}
-            <Card className="p-6 bg-orange-50">
-              <CardContent className="p-0">
-                <h3 className="font-semibold text-gray-900 mb-4">
-                  Need Immediate Assistance?
-                </h3>
-                <div className="space-y-3">
-                  <Button asChild className="w-full justify-start" variant="outline">
-                    <a href="tel:+923218451083">
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call Now: +92 321-8451083
-                    </a>
-                  </Button>
-                  <Button asChild className="w-full justify-start" variant="outline">
-                    <a href="mailto:propertypointestate@gmail.com">
-                      <Mail className="w-4 h-4 mr-2" />
-                      Email: propertypointestate@gmail.com
-                    </a>
-                  </Button>
-                </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Mail className="w-5 h-5 mr-2" />
+                  Email Us
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  info@realestate.com<br />
+                  support@realestate.com
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Clock className="w-5 h-5 mr-2" />
+                  Office Hours
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  Monday - Friday: 9:00 AM - 6:00 PM<br />
+                  Saturday: 10:00 AM - 4:00 PM<br />
+                  Sunday: Closed
+                </p>
               </CardContent>
             </Card>
           </div>
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <Card className="p-8">
-              <CardContent className="p-0">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Send Us a Message
-                </h2>
-                
+            <Card>
+              <CardHeader>
+                <CardTitle>Send us a Message</CardTitle>
+              </CardHeader>
+              <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name *
                       </label>
                       <Input
-                        placeholder="Your full name"
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
+                        placeholder="Enter your full name"
                         required
                       />
                     </div>
@@ -161,41 +167,39 @@ const Contact = () => {
                       </label>
                       <Input
                         type="email"
-                        placeholder="your.email@example.com"
                         value={formData.email}
                         onChange={(e) => handleChange("email", e.target.value)}
+                        placeholder="Enter your email"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Phone Number
                       </label>
                       <Input
-                        type="tel"
-                        placeholder="(555) 123-4567"
                         value={formData.phone}
                         onChange={(e) => handleChange("phone", e.target.value)}
+                        placeholder="Enter your phone number"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Inquiry Type
                       </label>
-                      <Select value={formData.inquiryType} onValueChange={(value) => handleChange("inquiryType", value)}>
+                      <Select value={formData.inquiry_type} onValueChange={(value) => handleChange("inquiry_type", value)}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select inquiry type" />
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="buying">Buying a Property</SelectItem>
-                          <SelectItem value="selling">Selling a Property</SelectItem>
-                          <SelectItem value="renting">Renting</SelectItem>
-                          <SelectItem value="investment">Investment Opportunities</SelectItem>
+                          <SelectItem value="general">General Inquiry</SelectItem>
+                          <SelectItem value="buying">Buying Property</SelectItem>
+                          <SelectItem value="selling">Selling Property</SelectItem>
                           <SelectItem value="valuation">Property Valuation</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
+                          <SelectItem value="investment">Investment Advice</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -203,12 +207,13 @@ const Contact = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject
+                      Subject *
                     </label>
                     <Input
-                      placeholder="Brief subject of your inquiry"
                       value={formData.subject}
                       onChange={(e) => handleChange("subject", e.target.value)}
+                      placeholder="Enter message subject"
+                      required
                     />
                   </div>
 
@@ -217,48 +222,25 @@ const Contact = () => {
                       Message *
                     </label>
                     <Textarea
-                      placeholder="Please provide details about your inquiry..."
                       value={formData.message}
                       onChange={(e) => handleChange("message", e.target.value)}
+                      placeholder="Enter your message"
                       rows={6}
                       required
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" size="lg">
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
-
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">
-                    <strong>Response Time:</strong> We typically respond to all inquiries within 2-4 business hours during our operating hours.
-                  </p>
-                </div>
               </CardContent>
             </Card>
           </div>
-        </div>
-
-        {/* Map Section */}
-        <div className="mt-16">
-          <Card className="overflow-hidden">
-            <CardContent className="p-0">
-              <div className="w-full h-96">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4260.727108577938!2d74.43157691232946!3d31.510555366378494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190f14fa499f17%3A0xc5359add9b7b7c2!2sProperty%20Point%20Estate%20(R)!5e1!3m2!1sen!2s!4v1751127516137!5m2!1sen!2s" 
-                  width="100%" 
-                  height="100%" 
-                  style={{border: 0}} 
-                  allowFullScreen 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Property Point Estate Location"
-                ></iframe>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>

@@ -15,6 +15,8 @@ interface Message {
   subject: string;
   message: string;
   status: 'unread' | 'read';
+  inquiry_type: string;
+  phone?: string;
   created_at: string;
 }
 
@@ -85,7 +87,7 @@ const RealtimeAdminMessages = () => {
       console.error('Error fetching messages:', error);
       toast({
         title: "Error",
-        description: "Failed to fetch messages. This is expected if the contact_messages table doesn't exist yet.",
+        description: "Failed to fetch messages.",
         variant: "destructive",
       });
     } finally {
@@ -107,6 +109,8 @@ const RealtimeAdminMessages = () => {
   };
 
   const deleteMessage = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this message?')) return;
+
     try {
       const { error } = await supabase
         .from('contact_messages')
@@ -202,6 +206,11 @@ const RealtimeAdminMessages = () => {
                   <p className="text-xs text-gray-600 line-clamp-2">
                     {message.message}
                   </p>
+                  <div className="mt-2">
+                    <Badge variant="outline" className="text-xs">
+                      {message.inquiry_type}
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
             ))
@@ -219,6 +228,11 @@ const RealtimeAdminMessages = () => {
                     <p className="text-sm text-gray-600 mt-1">
                       From: {selectedMessage.name} ({selectedMessage.email})
                     </p>
+                    {selectedMessage.phone && (
+                      <p className="text-sm text-gray-600">
+                        Phone: {selectedMessage.phone}
+                      </p>
+                    )}
                     <p className="text-xs text-gray-500 mt-1">
                       {formatDistanceToNow(new Date(selectedMessage.created_at), { addSuffix: true })}
                     </p>
@@ -239,7 +253,10 @@ const RealtimeAdminMessages = () => {
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t">
-                  <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+                  <Button 
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+                    onClick={() => window.open(`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}`)}
+                  >
                     <Mail className="w-4 h-4 mr-2" />
                     Reply to {selectedMessage.name}
                   </Button>

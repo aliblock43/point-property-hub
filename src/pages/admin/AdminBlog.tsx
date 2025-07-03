@@ -1,66 +1,107 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Plus, Search, Edit, Trash2, Eye, Calendar, FileText } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  status: string;
+  author: string;
+  published_at: string | null;
+  views: number;
+  tags: string[];
+  excerpt: string | null;
+  created_at: string;
+}
 
 const AdminBlog = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "The Complete First-Time Home Buyer's Guide for 2024",
-      status: "Published",
-      author: "Sarah Johnson",
-      publishDate: "2024-01-15",
-      views: 1245,
-      tags: ["First-time Buyers", "Home Buying"],
-      excerpt: "Everything you need to know about buying your first home..."
-    },
-    {
-      id: 2,
-      title: "Real Estate Market Trends to Watch in 2024",
-      status: "Published",
-      author: "Michael Chen",
-      publishDate: "2024-01-10",
-      views: 892,
-      tags: ["Market Analysis", "Investment"],
-      excerpt: "An in-depth analysis of the current real estate market..."
-    },
-    {
-      id: 3,
-      title: "10 Essential Tips for Selling Your Home Quickly",
-      status: "Draft",
-      author: "Emily Rodriguez",
-      publishDate: "2024-01-05",
-      views: 0,
-      tags: ["Home Selling", "Tips"],
-      excerpt: "Expert advice on preparing your home for sale..."
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
+  const fetchBlogPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setBlogPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch blog posts.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const filteredPosts = blogPosts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.author.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this blog post?")) {
-      console.log("Delete blog post:", id);
-      // Handle deletion
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setBlogPosts(prev => prev.filter(post => post.id !== id));
+      toast({
+        title: "Success",
+        description: "Blog post deleted successfully.",
+      });
+    } catch (error) {
+      console.error('Error deleting blog post:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete blog post.",
+        variant: "destructive",
+      });
     }
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'Not published';
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  const publishedCount = blogPosts.filter(post => post.status === 'published').length;
+  const draftCount = blogPosts.filter(post => post.status === 'draft').length;
 
   return (
     <div className="space-y-6">
@@ -70,9 +111,11 @@ const AdminBlog = () => {
           <h1 className="text-2xl font-bold text-gray-900">Manage Blog Posts</h1>
           <p className="text-gray-600">Create and manage your blog content</p>
         </div>
-        <Button className="mt-4 sm:mt-0 bg-blue-600 hover:bg-blue-700">
-          <Plus className="w-4 h-4 mr-2" />
-          Create New Post
+        <Button asChild className="mt-4 sm:mt-0 bg-blue-600 hover:bg-blue-700">
+          <Link to="/admin/blog/new">
+            <Plus className="w-4 h-4 mr-2" />
+            Create New Post
+          </Link>
         </Button>
       </div>
 
@@ -88,10 +131,6 @@ const AdminBlog = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
               />
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline">All Status</Button>
-              <Button variant="outline">Filter</Button>
             </div>
           </div>
         </CardContent>
@@ -109,53 +148,53 @@ const AdminBlog = () => {
                       {post.title}
                     </h3>
                     <Badge 
-                      variant={post.status === 'Published' ? 'default' : 'outline'}
-                      className={post.status === 'Published' ? 'bg-green-600' : ''}
+                      variant={post.status === 'published' ? 'default' : 'outline'}
+                      className={post.status === 'published' ? 'bg-green-600' : ''}
                     >
                       {post.status}
                     </Badge>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {post.excerpt}
-                  </p>
+                  {post.excerpt && (
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  )}
                   
                   <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      <span>{formatDate(post.publishDate)}</span>
+                      <span>{formatDate(post.published_at)}</span>
                     </div>
                     <span>By {post.author}</span>
                     <div className="flex items-center">
                       <Eye className="w-4 h-4 mr-1" />
-                      <span>{post.views} views</span>
+                      <span>{post.views || 0} views</span>
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {post.tags.map((tag, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {post.tags.map((tag, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline">
-                    <Edit className="w-4 h-4 mr-1" />
-                    Edit
-                  </Button>
                   <Button size="sm" variant="outline" asChild>
-                    <Link to={`/blog/${post.id}`} target="_blank">
-                      <Eye className="w-4 h-4 mr-1" />
-                      View
+                    <Link to={`/admin/blog/${post.id}`}>
+                      <Edit className="w-4 h-4 mr-1" />
+                      Edit
                     </Link>
                   </Button>
                   <Button 
                     size="sm" 
-                    variant="outline" 
-                    onClick={() => handleDelete(post.id)}
+                    variant="outline"
+                    onClick={() => handleDelete(post.id, post.title)}
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -181,9 +220,11 @@ const AdminBlog = () => {
               {searchTerm ? 'Try adjusting your search terms.' : 'Get started by creating your first blog post.'}
             </p>
             {!searchTerm && (
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                <Plus className="w-4 h-4 mr-2" />
-                Create New Post
+              <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                <Link to="/admin/blog/new">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create New Post
+                </Link>
               </Button>
             )}
           </CardContent>
@@ -194,19 +235,19 @@ const AdminBlog = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-2xl font-bold text-blue-600 mb-2">12</div>
+            <div className="text-2xl font-bold text-blue-600 mb-2">{blogPosts.length}</div>
             <div className="text-sm text-gray-600">Total Posts</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-2xl font-bold text-green-600 mb-2">9</div>
+            <div className="text-2xl font-bold text-green-600 mb-2">{publishedCount}</div>
             <div className="text-sm text-gray-600">Published</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-2xl font-bold text-orange-600 mb-2">3</div>
+            <div className="text-2xl font-bold text-orange-600 mb-2">{draftCount}</div>
             <div className="text-sm text-gray-600">Drafts</div>
           </CardContent>
         </Card>

@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProperties from "./pages/admin/AdminProperties";
 import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AdminBlogForm from "./pages/admin/AdminBlogForm";
 import AdminMessages from "./pages/admin/AdminMessages";
 import NotFound from "./pages/NotFound";
 
@@ -52,6 +53,8 @@ const App = () => (
             <Route path="properties/new" element={<AdminPropertyForm />} />
             <Route path="properties/:id" element={<AdminPropertyForm />} />
             <Route path="blog" element={<AdminBlog />} />
+            <Route path="blog/new" element={<AdminBlogForm />} />
+            <Route path="blog/:id" element={<AdminBlogForm />} />
             <Route path="messages" element={<AdminMessages />} />
           </Route>
           

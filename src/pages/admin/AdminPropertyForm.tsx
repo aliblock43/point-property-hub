@@ -9,11 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Save, X, Plus, Upload } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const AdminPropertyForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;
+  const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -23,7 +26,7 @@ const AdminPropertyForm = () => {
     bedrooms: "",
     bathrooms: "",
     area: "",
-    yearBuilt: "",
+    year_built: "",
     description: "",
     featured: false,
     status: "active"
@@ -32,36 +35,106 @@ const AdminPropertyForm = () => {
   const [amenities, setAmenities] = useState<string[]>([]);
   const [newAmenity, setNewAmenity] = useState("");
   const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isEditing) {
-      // Mock loading existing property data
-      setFormData({
-        title: "Luxury Downtown Condo",
-        price: "850000",
-        location: "Downtown, Property City",
-        type: "apartment",
-        bedrooms: "2",
-        bathrooms: "2",
-        area: "1200",
-        yearBuilt: "2020",
-        description: "This stunning luxury condo offers modern living in the heart of downtown...",
-        featured: true,
-        status: "active"
-      });
-      setAmenities(["Central Air Conditioning", "Hardwood Floors", "In-Unit Laundry", "Private Balcony"]);
-      setImages([
-        "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
-        "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop"
-      ]);
+      fetchProperty();
     }
-  }, [isEditing]);
+  }, [isEditing, id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const fetchProperty = async () => {
+    if (!id) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+
+      setFormData({
+        title: data.title || "",
+        price: data.price?.toString() || "",
+        location: data.location || "",
+        type: data.type || "",
+        bedrooms: data.bedrooms?.toString() || "",
+        bathrooms: data.bathrooms?.toString() || "",
+        area: data.area || "",
+        year_built: data.year_built?.toString() || "",
+        description: data.description || "",
+        featured: data.featured || false,
+        status: data.status || "active"
+      });
+      
+      setAmenities(data.amenities || []);
+      setImages(data.images || []);
+    } catch (error) {
+      console.error('Error fetching property:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch property details.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Property data:", { ...formData, amenities, images });
-    // Handle form submission
-    navigate("/admin/properties");
+    setLoading(true);
+
+    try {
+      const propertyData = {
+        title: formData.title,
+        price: parseFloat(formData.price),
+        location: formData.location,
+        type: formData.type,
+        bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : null,
+        bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : null,
+        area: formData.area,
+        year_built: formData.year_built ? parseInt(formData.year_built) : null,
+        description: formData.description,
+        amenities,
+        images,
+        featured: formData.featured,
+        status: formData.status,
+        slug: formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now()
+      };
+
+      let error;
+      if (isEditing) {
+        const { error: updateError } = await supabase
+          .from('properties')
+          .update(propertyData)
+          .eq('id', id);
+        error = updateError;
+      } else {
+        const { error: insertError } = await supabase
+          .from('properties')
+          .insert([propertyData]);
+        error = insertError;
+      }
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: `Property ${isEditing ? 'updated' : 'created'} successfully.`,
+      });
+
+      navigate("/admin/properties");
+    } catch (error) {
+      console.error('Error saving property:', error);
+      toast({
+        title: "Error",
+        description: `Failed to ${isEditing ? 'update' : 'create'} property.`,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field: string, value: string | boolean) => {
@@ -80,9 +153,10 @@ const AdminPropertyForm = () => {
   };
 
   const addImage = () => {
-    // Mock image upload - in real app, handle file upload
-    const mockImageUrl = "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=400&h=300&fit=crop";
-    setImages([...images, mockImageUrl]);
+    const imageUrl = prompt("Enter image URL:");
+    if (imageUrl && imageUrl.trim()) {
+      setImages([...images, imageUrl.trim()]);
+    }
   };
 
   const removeImage = (indexToRemove: number) => {
@@ -115,9 +189,10 @@ const AdminPropertyForm = () => {
           form="property-form"
           type="submit"
           className="bg-blue-600 hover:bg-blue-700"
+          disabled={loading}
         >
           <Save className="w-4 h-4 mr-2" />
-          {isEditing ? "Update Property" : "Save Property"}
+          {loading ? "Saving..." : isEditing ? "Update Property" : "Save Property"}
         </Button>
       </div>
 
@@ -208,13 +283,12 @@ const AdminPropertyForm = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Area (sq ft)
+                    Area
                   </label>
                   <Input
-                    type="number"
                     value={formData.area}
                     onChange={(e) => handleChange("area", e.target.value)}
-                    placeholder="0"
+                    placeholder="e.g., 1 KANAL"
                   />
                 </div>
                 <div>
@@ -223,8 +297,8 @@ const AdminPropertyForm = () => {
                   </label>
                   <Input
                     type="number"
-                    value={formData.yearBuilt}
-                    onChange={(e) => handleChange("yearBuilt", e.target.value)}
+                    value={formData.year_built}
+                    onChange={(e) => handleChange("year_built", e.target.value)}
                     placeholder="YYYY"
                   />
                 </div>
@@ -287,7 +361,7 @@ const AdminPropertyForm = () => {
             <CardContent className="space-y-4">
               <Button type="button" onClick={addImage} variant="outline" className="w-full">
                 <Upload className="w-4 h-4 mr-2" />
-                Add Image
+                Add Image URL
               </Button>
               
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -345,26 +419,6 @@ const AdminPropertyForm = () => {
                 <label htmlFor="featured" className="text-sm font-medium text-gray-700">
                   Mark as Featured Property
                 </label>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>SEO & Marketing</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  SEO Title
-                </label>
-                <Input placeholder="SEO-friendly title" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Meta Description
-                </label>
-                <Textarea placeholder="Brief description for search engines" rows={3} />
               </div>
             </CardContent>
           </Card>

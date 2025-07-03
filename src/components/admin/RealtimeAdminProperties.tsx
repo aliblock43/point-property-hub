@@ -16,7 +16,7 @@ interface Property {
   type: string;
   status: string;
   created_at: string;
-  image_url?: string;
+  images?: string[];
 }
 
 const RealtimeAdminProperties = () => {
@@ -89,7 +89,7 @@ const RealtimeAdminProperties = () => {
       console.error('Error fetching properties:', error);
       toast({
         title: "Error",
-        description: "Failed to fetch properties. This is expected if the properties table doesn't exist yet.",
+        description: "Failed to fetch properties.",
         variant: "destructive",
       });
     } finally {
@@ -97,7 +97,9 @@ const RealtimeAdminProperties = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+
     try {
       const { error } = await supabase
         .from('properties')
@@ -164,9 +166,9 @@ const RealtimeAdminProperties = () => {
           {properties.map((property) => (
             <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
               <div className="aspect-video bg-gradient-to-br from-orange-100 to-orange-200 relative overflow-hidden">
-                {property.image_url ? (
+                {property.images?.[0] ? (
                   <img 
-                    src={property.image_url} 
+                    src={property.images[0]} 
                     alt={property.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -177,7 +179,7 @@ const RealtimeAdminProperties = () => {
                 )}
                 <Badge 
                   className={`absolute top-2 right-2 ${
-                    property.status === 'available' 
+                    property.status === 'active' 
                       ? 'bg-green-500 hover:bg-green-600' 
                       : property.status === 'sold'
                       ? 'bg-red-500 hover:bg-red-600'
@@ -223,7 +225,7 @@ const RealtimeAdminProperties = () => {
                   <Button 
                     size="sm" 
                     variant="destructive"
-                    onClick={() => handleDelete(property.id)}
+                    onClick={() => handleDelete(property.id, property.title)}
                     className="px-3"
                   >
                     <Trash2 className="w-4 h-4" />
