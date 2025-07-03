@@ -29,6 +29,7 @@ const AdminBlogForm = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(isEditing);
 
   useEffect(() => {
     if (isEditing) {
@@ -39,6 +40,7 @@ const AdminBlogForm = () => {
   const fetchBlogPost = async () => {
     if (!id) return;
     
+    setFetchLoading(true);
     try {
       const { data, error } = await supabase
         .from('blog_posts')
@@ -65,11 +67,30 @@ const AdminBlogForm = () => {
         description: "Failed to fetch blog post details.",
         variant: "destructive",
       });
+    } finally {
+      setFetchLoading(false);
     }
+  };
+
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '') + '-' + Date.now();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.title.trim() || !formData.content.trim()) {
+      toast({
+        title: "Error",
+        description: "Title and content are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -81,8 +102,9 @@ const AdminBlogForm = () => {
         status: formData.status,
         featured_image: formData.featured_image,
         tags,
-        slug: formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now(),
-        published_at: formData.status === 'published' ? new Date().toISOString() : null
+        slug: isEditing ? undefined : generateSlug(formData.title),
+        published_at: formData.status === 'published' ? new Date().toISOString() : null,
+        updated_at: new Date().toISOString()
       };
 
       let error;
@@ -134,6 +156,14 @@ const AdminBlogForm = () => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
+  if (fetchLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -157,8 +187,7 @@ const AdminBlogForm = () => {
           </div>
         </div>
         <Button
-          form="blog-form"
-          type="submit"
+          onClick={handleSubmit}
           className="bg-blue-600 hover:bg-blue-700"
           disabled={loading}
         >
@@ -167,7 +196,7 @@ const AdminBlogForm = () => {
         </Button>
       </div>
 
-      <form id="blog-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           <Card>
@@ -183,7 +212,6 @@ const AdminBlogForm = () => {
                   value={formData.title}
                   onChange={(e) => handleChange("title", e.target.value)}
                   placeholder="Enter blog post title"
-                  required
                 />
               </div>
 
@@ -208,7 +236,6 @@ const AdminBlogForm = () => {
                   onChange={(e) => handleChange("content", e.target.value)}
                   placeholder="Write your blog post content here..."
                   rows={15}
-                  required
                 />
               </div>
             </CardContent>
@@ -265,7 +292,6 @@ const AdminBlogForm = () => {
                   value={formData.author}
                   onChange={(e) => handleChange("author", e.target.value)}
                   placeholder="Author name"
-                  required
                 />
               </div>
 
@@ -297,7 +323,7 @@ const AdminBlogForm = () => {
             </CardContent>
           </Card>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

@@ -27,14 +27,33 @@ interface Property {
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("");
-  const [filterPrice, setFilterPrice] = useState("");
-  const [sortBy, setSortBy] = useState("newest");
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     fetchProperties();
+
+    // Set up real-time subscription
+    const channel = supabase
+      .channel('properties-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'properties'
+        },
+        () => {
+          console.log('Property changed, refetching...');
+          fetchProperties();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchProperties = async () => {
@@ -135,7 +154,6 @@ const Properties = () => {
                   onClick={() => {
                     setSearchTerm("");
                     setFilterType("");
-                    setFilterPrice("");
                   }}
                 >
                   Clear Filters
