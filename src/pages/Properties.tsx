@@ -22,19 +22,38 @@ interface Property {
   images: string[];
   featured: boolean;
   slug: string;
+  status: string;
 }
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("");
-  const [filterPrice, setFilterPrice] = useState("");
-  const [sortBy, setSortBy] = useState("newest");
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     fetchProperties();
+    
+    // Set up real-time subscription for property changes
+    const channel = supabase
+      .channel('properties-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'properties'
+        },
+        () => {
+          fetchProperties(); // Refetch when changes occur
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchProperties = async () => {
@@ -135,7 +154,6 @@ const Properties = () => {
                   onClick={() => {
                     setSearchTerm("");
                     setFilterType("");
-                    setFilterPrice("");
                   }}
                 >
                   Clear Filters
@@ -197,7 +215,7 @@ const Properties = () => {
                       </div>
                     </div>
                     <Button asChild className="w-full">
-                      <Link to={`/properties/${property.slug}`}>
+                      <Link to={`/properties/${property.slug || property.id}`}>
                         View Details
                       </Link>
                     </Button>

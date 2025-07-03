@@ -1,61 +1,137 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Plus, Search, Edit, Trash2, Eye, MapPin, Building } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+
+interface Property {
+  id: string;
+  title: string;
+  price: number;
+  location: string;
+  type: string;
+  status: string;
+  featured: boolean;
+  views: number;
+  images: string[];
+  created_at: string;
+}
 
 const AdminProperties = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
-  const properties = [
-    {
-      id: 1,
-      title: "Luxury Downtown Condo",
-      price: 850000,
-      location: "Downtown, Property City",
-      type: "Apartment",
-      status: "Active",
-      featured: true,
-      views: 245,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop"
-    },
-    {
-      id: 2,
-      title: "Suburban Family Home",
-      price: 675000,
-      location: "Oakwood Suburbs",
-      type: "House",
-      status: "Active",
-      featured: true,
-      views: 189,
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=300&h=200&fit=crop"
-    },
-    {
-      id: 3,
-      title: "Modern Loft Apartment",
-      price: 520000,
-      location: "Arts District",
-      type: "Apartment",
-      status: "Sold",
-      featured: false,
-      views: 312,
-      image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=300&h=200&fit=crop"
+  useEffect(() => {
+    fetchProperties();
+    
+    // Set up real-time subscription
+    const channel = supabase
+      .channel('admin-properties-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'properties'
+        },
+        (payload) => {
+          console.log('Real-time property change:', payload);
+          
+          if (payload.eventType === 'INSERT') {
+            setProperties(prev => [payload.new as Property, ...prev]);
+            toast({
+              title: "New Property Added",
+              description: `${payload.new.title} has been added to the listings.`,
+            });
+          } else if (payload.eventType === 'UPDATE') {
+            setProperties(prev => 
+              prev.map(prop => 
+                prop.id === payload.new.id ? payload.new as Property : prop
+              )
+            );
+            toast({
+              title: "Property Updated",
+              description: `${payload.new.title} has been updated.`,
+            });
+          } else if (payload.eventType === 'DELETE') {
+            setProperties(prev => 
+              prev.filter(prop => prop.id !== payload.old.id)
+            );
+            toast({
+              title: "Property Deleted",
+              description: "A property has been removed from the listings.",
+              variant: "destructive",
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [toast]);
+
+  const fetchProperties = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProperties(data || []);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch properties.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const filteredProperties = properties.filter(property =>
     property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     property.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this property?")) {
-      console.log("Delete property:", id);
-      // Handle deletion
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+
+    try {
+      const { error } = await supabase
+        .from('properties')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error deleting property:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete property.",
+        variant: "destructive",
+      });
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -86,10 +162,6 @@ const AdminProperties = () => {
                 className="pl-10"
               />
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline">All Status</Button>
-              <Button variant="outline">Filter</Button>
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -100,7 +172,7 @@ const AdminProperties = () => {
           <Card key={property.id} className="overflow-hidden">
             <div className="relative">
               <img
-                src={property.image}
+                src={property.images?.[0] || '/placeholder.svg'}
                 alt={property.title}
                 className="w-full h-48 object-cover"
               />
@@ -111,8 +183,8 @@ const AdminProperties = () => {
               )}
               <Badge 
                 className={`absolute top-2 right-2 ${
-                  property.status === 'Active' ? 'bg-green-600' : 
-                  property.status === 'Sold' ? 'bg-gray-600' : 'bg-yellow-600'
+                  property.status === 'active' ? 'bg-green-600' : 
+                  property.status === 'sold' ? 'bg-gray-600' : 'bg-yellow-600'
                 }`}
               >
                 {property.status}
@@ -135,7 +207,7 @@ const AdminProperties = () => {
                 </span>
                 <div className="flex items-center text-sm text-gray-500">
                   <Eye className="w-4 h-4 mr-1" />
-                  <span>{property.views} views</span>
+                  <span>{property.views || 0} views</span>
                 </div>
               </div>
               
@@ -149,7 +221,7 @@ const AdminProperties = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  onClick={() => handleDelete(property.id)}
+                  onClick={() => handleDelete(property.id, property.title)}
                   className="text-red-600 hover:text-red-700 hover:bg-red-50"
                 >
                   <Trash2 className="w-4 h-4" />

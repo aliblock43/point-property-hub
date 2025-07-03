@@ -18,21 +18,25 @@ const Contact = () => {
     message: "",
     inquiry_type: "general"
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-
-  const handleChange = (field: string, value: string) => {
-    setFormData({ ...formData, [field]: value });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setLoading(true);
 
     try {
       const { error } = await supabase
         .from('contact_messages')
-        .insert([formData]);
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          inquiry_type: formData.inquiry_type,
+          status: 'unread'
+        }]);
 
       if (error) throw error;
 
@@ -51,45 +55,53 @@ const Contact = () => {
         inquiry_type: "general"
       });
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error sending message:', error);
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: "Failed to send your message. Please try again.",
         variant: "destructive",
       });
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Contact Us</h1>
-          <p className="text-lg text-gray-600">
-            Get in touch with our real estate experts. We're here to help you find your dream property.
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Contact Us
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get in touch with our real estate experts. We're here to help you find your perfect property.
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <div className="space-y-6">
+          <div className="lg:col-span-1 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <MapPin className="w-5 h-5 mr-2" />
-                  Visit Our Office
+                  Our Office
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
                   123 Real Estate Street<br />
-                  Property City, PC 12345<br />
-                  United States
+                  Business District<br />
+                  Lahore, Pakistan 54000
                 </p>
               </CardContent>
             </Card>
@@ -98,13 +110,13 @@ const Contact = () => {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Phone className="w-5 h-5 mr-2" />
-                  Call Us
+                  Phone
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  Main: (555) 123-4567<br />
-                  Mobile: (555) 987-6543
+                  +92 300 1234567<br />
+                  +92 42 1234567
                 </p>
               </CardContent>
             </Card>
@@ -113,13 +125,13 @@ const Contact = () => {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Mail className="w-5 h-5 mr-2" />
-                  Email Us
+                  Email
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
                   info@realestate.com<br />
-                  support@realestate.com
+                  sales@realestate.com
                 </p>
               </CardContent>
             </Card>
@@ -128,7 +140,7 @@ const Contact = () => {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Clock className="w-5 h-5 mr-2" />
-                  Office Hours
+                  Business Hours
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -149,7 +161,7 @@ const Contact = () => {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name *
@@ -157,7 +169,7 @@ const Contact = () => {
                       <Input
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
-                        placeholder="Enter your full name"
+                        placeholder="Your full name"
                         required
                       />
                     </div>
@@ -169,21 +181,22 @@ const Contact = () => {
                         type="email"
                         value={formData.email}
                         onChange={(e) => handleChange("email", e.target.value)}
-                        placeholder="Enter your email"
+                        placeholder="your.email@example.com"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Phone Number
                       </label>
                       <Input
+                        type="tel"
                         value={formData.phone}
                         onChange={(e) => handleChange("phone", e.target.value)}
-                        placeholder="Enter your phone number"
+                        placeholder="+92 300 1234567"
                       />
                     </div>
                     <div>
@@ -192,14 +205,14 @@ const Contact = () => {
                       </label>
                       <Select value={formData.inquiry_type} onValueChange={(value) => handleChange("inquiry_type", value)}>
                         <SelectTrigger>
-                          <SelectValue />
+                          <SelectValue placeholder="Select inquiry type" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="general">General Inquiry</SelectItem>
                           <SelectItem value="buying">Buying Property</SelectItem>
                           <SelectItem value="selling">Selling Property</SelectItem>
                           <SelectItem value="valuation">Property Valuation</SelectItem>
-                          <SelectItem value="investment">Investment Advice</SelectItem>
+                          <SelectItem value="investment">Investment Opportunity</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -212,7 +225,7 @@ const Contact = () => {
                     <Input
                       value={formData.subject}
                       onChange={(e) => handleChange("subject", e.target.value)}
-                      placeholder="Enter message subject"
+                      placeholder="Brief subject of your message"
                       required
                     />
                   </div>
@@ -224,7 +237,7 @@ const Contact = () => {
                     <Textarea
                       value={formData.message}
                       onChange={(e) => handleChange("message", e.target.value)}
-                      placeholder="Enter your message"
+                      placeholder="Tell us more about your inquiry..."
                       rows={6}
                       required
                     />
@@ -233,9 +246,9 @@ const Contact = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-blue-600 hover:bg-blue-700"
-                    disabled={isSubmitting}
+                    disabled={loading}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {loading ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
