@@ -14,7 +14,7 @@ interface Message {
   email: string;
   subject: string;
   message: string;
-  status: 'unread' | 'read';
+  status: string; // Changed from 'unread' | 'read' to string to match database
   inquiry_type: string;
   phone?: string;
   created_at: string;

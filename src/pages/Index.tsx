@@ -69,7 +69,6 @@ const Index = () => {
   const featuredProperties = [
     {
       id: 1,
-      // slug: "luxury-downtown-condo",
       title: "HOUSE NO 285, BLOCK C",
       price: 7,
       location: "DHA Phase 6 LAHORE",
@@ -81,7 +80,6 @@ const Index = () => {
       featured: true
     }, {
       id: 2,
-      // slug: "suburban-family-home",
       title: "HOUSE NO 1112, BLOCK D",
       price: 7,
       location: "DHA Phase 6 LAHORE",
@@ -93,7 +91,6 @@ const Index = () => {
       featured: true
     }, {
       id: 3,
-      // slug: "modern-loft-apartment",
       title: "HOUSE NO 123, BLOCK E",
       price: 6,
       location: "DHA Phase 8 LAHORE",
@@ -350,7 +347,7 @@ const Index = () => {
                     </div>
                   </div>
                   <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
-                    <Link to={`/properties/${property.slug}`}>
+                    <Link to="/properties">
                       View Details
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
