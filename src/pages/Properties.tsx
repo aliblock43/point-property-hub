@@ -26,7 +26,7 @@ interface Property {
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const [filterType, setFilterType] = useState("all");
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -58,13 +58,19 @@ const Properties = () => {
 
   const fetchProperties = async () => {
     try {
+      console.log('Fetching properties...');
       const { data, error } = await supabase
         .from('properties')
         .select('*')
         .eq('status', 'active')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      console.log('Fetched properties:', data);
       setProperties(data || []);
     } catch (error) {
       console.error('Error fetching properties:', error);
@@ -81,7 +87,7 @@ const Properties = () => {
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = !filterType || property.type === filterType;
+    const matchesType = filterType === "all" || property.type === filterType;
     return matchesSearch && matchesType;
   });
 
@@ -140,7 +146,7 @@ const Properties = () => {
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
+                      <SelectItem value="all">All Types</SelectItem>
                       <SelectItem value="house">House</SelectItem>
                       <SelectItem value="apartment">Apartment</SelectItem>
                       <SelectItem value="land">Land</SelectItem>
@@ -153,7 +159,7 @@ const Properties = () => {
                   className="w-full"
                   onClick={() => {
                     setSearchTerm("");
-                    setFilterType("");
+                    setFilterType("all");
                   }}
                 >
                   Clear Filters
