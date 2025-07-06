@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -356,7 +355,7 @@ const AdminBlogForm = () => {
                 <div className="flex items-center gap-2">
                   <Input
                     type="file"
-                    Accept="image/*"
+                    accept="image/*"
                     onChange={handleImageUpload}
                     disabled={imageUploading}
                     className="hidden"
