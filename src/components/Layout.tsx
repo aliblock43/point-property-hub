@@ -1,6 +1,6 @@
 
-import { Navbar } from './Navbar';
-import { Footer } from './Footer';
+import Navbar from './Navbar';
+import Footer from './Footer';
 import WhatsAppFloat from './WhatsAppFloat';
 
 interface LayoutProps {
