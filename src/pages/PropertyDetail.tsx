@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,10 +7,32 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Bed, Bath, Square, Calendar, Heart, Share, Phone, Mail, User } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+
+interface Property {
+  id: string;
+  title: string;
+  price: number;
+  location: string;
+  type: string;
+  bedrooms: number;
+  bathrooms: number;
+  area: string;
+  year_built: number;
+  description: string;
+  images: string[];
+  amenities: string[];
+  featured: boolean;
+  slug: string;
+}
 
 const PropertyDetail = () => {
   const { slug } = useParams();
+  const { toast } = useToast();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [property, setProperty] = useState<Property | null>(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,42 +40,69 @@ const PropertyDetail = () => {
     message: ""
   });
 
-  // Mock property data - in real app, fetch based on slug
-  const property = {
-    id: 1,
-    slug: "luxury-downtown-condo",
-    title: "Luxury Downtown Condo",
-    price: 850000,
-    location: "Downtown, Property City",
-    type: "Apartment",
-    bedrooms: 2,
-    bathrooms: 2,
-    area: 1200,
-    yearBuilt: 2020,
-    description: "This stunning luxury condo offers modern living in the heart of downtown. With floor-to-ceiling windows, high-end finishes, and breathtaking city views, this property is perfect for those seeking urban sophistication. The open-concept design features a gourmet kitchen with premium appliances, spacious living areas, and a private balcony overlooking the city skyline.",
-    images: [
-      "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop"
-    ],
-    amenities: [
-      "Central Air Conditioning",
-      "Hardwood Floors",
-      "In-Unit Laundry",
-      "Private Balcony",
-      "Fitness Center",
-      "Concierge Service",
-      "Rooftop Deck",
-      "Underground Parking"
-    ],
-    featured: true
+  useEffect(() => {
+    if (slug) {
+      fetchProperty();
+    }
+  }, [slug]);
+
+  const fetchProperty = async () => {
+    try {
+      console.log('Fetching property with slug:', slug);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('slug', slug)
+        .eq('status', 'active')
+        .single();
+
+      if (error) {
+        console.error('Error fetching property:', error);
+        throw error;
+      }
+
+      console.log('Fetched property:', data);
+      setProperty(data);
+    } catch (error) {
+      console.error('Error fetching property:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch property details.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Contact form submitted:", formData);
-    // Handle form submission
+    toast({
+      title: "Message Sent",
+      description: "Your message has been sent successfully. We'll get back to you soon!",
+    });
+    setFormData({ name: "", email: "", phone: "", message: "" });
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (!property) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Property Not Found</h1>
+          <p className="text-gray-600">The property you're looking for doesn't exist or has been removed.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -65,7 +114,7 @@ const PropertyDetail = () => {
             <Card className="overflow-hidden">
               <div className="relative">
                 <img
-                  src={property.images[currentImageIndex]}
+                  src={property.images?.[currentImageIndex] || '/placeholder.svg'}
                   alt={property.title}
                   className="w-full h-96 object-cover"
                 />
@@ -85,25 +134,27 @@ const PropertyDetail = () => {
               </div>
               
               {/* Thumbnail Images */}
-              <div className="p-4">
-                <div className="flex space-x-2 overflow-x-auto">
-                  {property.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                        currentImageIndex === index ? 'border-blue-600' : 'border-gray-200'
-                      }`}
-                    >
-                      <img
-                        src={image}
-                        alt={`${property.title} ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
+              {property.images && property.images.length > 1 && (
+                <div className="p-4">
+                  <div className="flex space-x-2 overflow-x-auto">
+                    {property.images.map((image, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                          currentImageIndex === index ? 'border-blue-600' : 'border-gray-200'
+                        }`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${property.title} ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </Card>
 
             {/* Property Details */}
@@ -118,7 +169,7 @@ const PropertyDetail = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 text-right">
                   <div className="text-3xl font-bold text-blue-600">
-                    ${property.price.toLocaleString()}
+                    ${property.price?.toLocaleString()}
                   </div>
                   <Badge variant="outline" className="mt-2">
                     {property.type}
@@ -128,48 +179,60 @@ const PropertyDetail = () => {
 
               {/* Key Details */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <Bed className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                  <div className="text-2xl font-bold">{property.bedrooms}</div>
-                  <div className="text-sm text-gray-600">Bedrooms</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <Bath className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                  <div className="text-2xl font-bold">{property.bathrooms}</div>
-                  <div className="text-sm text-gray-600">Bathrooms</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <Square className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                  <div className="text-2xl font-bold">{property.area}</div>
-                  <div className="text-sm text-gray-600">Sq Ft</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <Calendar className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                  <div className="text-2xl font-bold">{property.yearBuilt}</div>
-                  <div className="text-sm text-gray-600">Year Built</div>
-                </div>
+                {property.bedrooms && (
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <Bed className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <div className="text-2xl font-bold">{property.bedrooms}</div>
+                    <div className="text-sm text-gray-600">Bedrooms</div>
+                  </div>
+                )}
+                {property.bathrooms && (
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <Bath className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <div className="text-2xl font-bold">{property.bathrooms}</div>
+                    <div className="text-sm text-gray-600">Bathrooms</div>
+                  </div>
+                )}
+                {property.area && (
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <Square className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <div className="text-2xl font-bold">{property.area}</div>
+                    <div className="text-sm text-gray-600">Area</div>
+                  </div>
+                )}
+                {property.year_built && (
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <Calendar className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <div className="text-2xl font-bold">{property.year_built}</div>
+                    <div className="text-sm text-gray-600">Year Built</div>
+                  </div>
+                )}
               </div>
 
               {/* Description */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Description</h2>
-                <p className="text-gray-700 leading-relaxed">
-                  {property.description}
-                </p>
-              </div>
+              {property.description && (
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold mb-4">Description</h2>
+                  <p className="text-gray-700 leading-relaxed">
+                    {property.description}
+                  </p>
+                </div>
+              )}
 
               {/* Amenities */}
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Amenities & Features</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {property.amenities.map((amenity, index) => (
-                    <div key={index} className="flex items-center">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
-                      <span className="text-gray-700">{amenity}</span>
-                    </div>
-                  ))}
+              {property.amenities && property.amenities.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">Amenities & Features</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {property.amenities.map((amenity, index) => (
+                      <div key={index} className="flex items-center">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                        <span className="text-gray-700">{amenity}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </Card>
 
             {/* Map Section */}

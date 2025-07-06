@@ -35,6 +35,7 @@ const AdminPropertyForm = () => {
   const [amenities, setAmenities] = useState<string[]>([]);
   const [newAmenity, setNewAmenity] = useState("");
   const [images, setImages] = useState<string[]>([]);
+  const [imageUploading, setImageUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -78,6 +79,51 @@ const AdminPropertyForm = () => {
         description: "Failed to fetch property details.",
         variant: "destructive",
       });
+    }
+  };
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setImageUploading(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('property-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('property-images')
+        .getPublicUrl(filePath);
+
+      setImages([...images, publicUrl]);
+      
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully.",
+      });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload image.",
+        variant: "destructive",
+      });
+    } finally {
+      setImageUploading(false);
+      // Reset the file input
+      if (event.target) {
+        event.target.value = '';
+      }
     }
   };
 
@@ -152,7 +198,7 @@ const AdminPropertyForm = () => {
     setAmenities(amenities.filter(amenity => amenity !== amenityToRemove));
   };
 
-  const addImage = () => {
+  const addImageUrl = () => {
     const imageUrl = prompt("Enter image URL:");
     if (imageUrl && imageUrl.trim()) {
       setImages([...images, imageUrl.trim()]);
@@ -359,10 +405,32 @@ const AdminPropertyForm = () => {
               <CardTitle>Property Images</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Button type="button" onClick={addImage} variant="outline" className="w-full">
-                <Upload className="w-4 h-4 mr-2" />
-                Add Image URL
-              </Button>
+              <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={imageUploading}
+                    className="hidden"
+                    id="image-upload"
+                  />
+                  <Button 
+                    type="button" 
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                    variant="outline" 
+                    disabled={imageUploading}
+                    className="flex-1"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    {imageUploading ? "Uploading..." : "Upload Image"}
+                  </Button>
+                </div>
+                <Button type="button" onClick={addImageUrl} variant="outline">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add URL
+                </Button>
+              </div>
               
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {images.map((image, index) => (
