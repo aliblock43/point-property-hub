@@ -1,18 +1,21 @@
 
-import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
+import WhatsAppFloat from './WhatsAppFloat';
 
-const Layout = () => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1">
-        <Outlet />
+        {children}
       </main>
       <Footer />
+      <WhatsAppFloat />
     </div>
   );
 };
-
-export default Layout;

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -199,7 +198,7 @@ const Properties = () => {
                         {property.title}
                       </h3>
                       <span className="text-xl font-bold text-blue-600 whitespace-nowrap ml-2">
-                        ${property.price?.toLocaleString()}
+                        PKR {property.price?.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex items-center text-gray-600 mb-4">

@@ -8,12 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, ShoppingCart, MessageCircle, UserCheck, Play, Award, TrendingUp, Users2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [certificateApi, setCertificateApi] = useState<CarouselApi>();
   const [currentCertificate, setCurrentCertificate] = useState(0);
+  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
 
   const heroSlides = [{
     image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
@@ -31,6 +33,32 @@ const Index = () => {
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
   }];
+
+  // Fetch featured properties from database
+  useEffect(() => {
+    const fetchFeaturedProperties = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*')
+          .eq('featured', true)
+          .eq('status', 'active')
+          .limit(3)
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching featured properties:', error);
+          return;
+        }
+
+        setFeaturedProperties(data || []);
+      } catch (error) {
+        console.error('Error fetching featured properties:', error);
+      }
+    };
+
+    fetchFeaturedProperties();
+  }, []);
 
   // Auto-play functionality for hero slider
   useEffect(() => {
@@ -66,41 +94,6 @@ const Index = () => {
     });
   }, [certificateApi]);
 
-  const featuredProperties = [
-    {
-      id: 1,
-      title: "HOUSE NO 285, BLOCK C",
-      price: 7,
-      location: "DHA Phase 6 LAHORE",
-      type: "HOUSE",
-      bedrooms: 4,
-      bathrooms: 5,
-      area: "1 KANAL",
-      image: "/lovable-uploads/HOUSE111.jpg",
-      featured: true
-    }, {
-      id: 2,
-      title: "HOUSE NO 1112, BLOCK D",
-      price: 7,
-      location: "DHA Phase 6 LAHORE",
-      type: "HOUSE",
-      bedrooms: 4,
-      bathrooms: 3,
-      area: "1 KANAL",
-      image: "/lovable-uploads/HOUSE222.jpg",
-      featured: true
-    }, {
-      id: 3,
-      title: "HOUSE NO 123, BLOCK E",
-      price: 6,
-      location: "DHA Phase 8 LAHORE",
-      type: "HOUSE",
-      bedrooms: 3,
-      bathrooms: 4,
-      area: "1 KANAL",
-      image: "/lovable-uploads/HOUSE333.jpg",
-      featured: true
-    }];
   const services = [
     {
       icon: <ShoppingCart className="w-12 h-12 text-orange-600" />,
@@ -314,9 +307,9 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            {featuredProperties.length > 0 ? featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative">
-                  <img src={property.image} alt={property.title} className="w-full h-64 object-cover" />
+                  <img src={property.images?.[0] || '/placeholder.svg'} alt={property.title} className="w-full h-64 object-cover" />
                   <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                     Featured
                   </Badge>
@@ -325,7 +318,7 @@ const Index = () => {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold text-gray-900">{property.title}</h3>
                     <span className="text-2xl font-bold text-orange-600">
-                      ${property.price.toLocaleString()}
+                      PKR {property.price?.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center text-gray-600 mb-4">
@@ -333,27 +326,38 @@ const Index = () => {
                     <span>{property.location}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center">
-                      <Bed className="w-4 h-4 mr-1" />
-                      <span>{property.bedrooms} bed</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="w-4 h-4 mr-1" />
-                      <span>{property.bathrooms} bath</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="w-4 h-4 mr-1" />
-                      <span>{property.area} sqft</span>
-                    </div>
+                    {property.bedrooms && (
+                      <div className="flex items-center">
+                        <Bed className="w-4 h-4 mr-1" />
+                        <span>{property.bedrooms} bed</span>
+                      </div>
+                    )}
+                    {property.bathrooms && (
+                      <div className="flex items-center">
+                        <Bath className="w-4 h-4 mr-1" />
+                        <span>{property.bathrooms} bath</span>
+                      </div>
+                    )}
+                    {property.area && (
+                      <div className="flex items-center">
+                        <Square className="w-4 h-4 mr-1" />
+                        <span>{property.area}</span>
+                      </div>
+                    )}
                   </div>
                   <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
-                    <Link to="/properties">
+                    <Link to={`/properties/${property.slug}`}>
                       View Details
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
                 </CardContent>
-              </Card>)}
+              </Card>) : (
+                // Fallback to show loading or no properties message
+                <div className="col-span-full text-center py-12">
+                  <p className="text-gray-500 text-lg">Loading featured properties...</p>
+                </div>
+              )}
           </div>
 
           <div className="text-center mt-12">

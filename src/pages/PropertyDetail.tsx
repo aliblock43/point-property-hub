@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -169,7 +168,7 @@ const PropertyDetail = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 text-right">
                   <div className="text-3xl font-bold text-blue-600">
-                    ${property.price?.toLocaleString()}
+                    PKR {property.price?.toLocaleString()}
                   </div>
                   <Badge variant="outline" className="mt-2">
                     {property.type}
@@ -287,7 +286,7 @@ const PropertyDetail = () => {
                 <div className="space-y-2">
                   <Button variant="outline" className="w-full justify-start">
                     <Phone className="w-4 h-4 mr-2" />
-                    +1 (555) 123-4567
+                    +92 300 1234567
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Mail className="w-4 h-4 mr-2" />
@@ -297,24 +296,28 @@ const PropertyDetail = () => {
               </div>
             </Card>
 
-            {/* Agent Info */}
+            {/* Agent Info - Updated to use real team member */}
             <Card className="p-6">
               <h3 className="text-xl font-bold mb-4">Your Agent</h3>
               <div className="flex items-center mb-4">
-                <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mr-4">
-                  <User className="w-8 h-8 text-gray-600" />
+                <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                  <img 
+                    src="/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png" 
+                    alt="Umer Shahid"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <div className="font-semibold">Sarah Johnson</div>
-                  <div className="text-sm text-gray-600">Senior Real Estate Agent</div>
+                  <div className="font-semibold">Umer Shahid</div>
+                  <div className="text-sm text-gray-600">Chief Executive Officer</div>
                   <div className="text-sm text-blue-600">Licensed Realtor</div>
                 </div>
               </div>
               <p className="text-sm text-gray-700 mb-4">
-                With over 10 years of experience in the real estate market, Sarah specializes in luxury properties and first-time home buyers.
+                With over 12 years of experience in the real estate market, Umer specializes in luxury properties and investment opportunities across DHA developments.
               </p>
               <Button variant="outline" className="w-full">
-                View Agent Profile
+                Contact Umer Shahid
               </Button>
             </Card>
           </div>
