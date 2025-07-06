@@ -161,6 +161,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_blog_slug: {
+        Args: { title: string }
+        Returns: string
+      }
       generate_slug: {
         Args: { title: string }
         Returns: string

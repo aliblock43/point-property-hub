@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -72,20 +71,13 @@ const AdminBlogForm = () => {
     }
   };
 
-  const generateSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '') + '-' + Date.now();
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.title.trim() || !formData.content.trim()) {
+    if (!formData.title.trim() || !formData.content.trim() || !formData.author.trim()) {
       toast({
         title: "Error",
-        description: "Title and content are required.",
+        description: "Title, content, and author are required.",
         variant: "destructive",
       });
       return;
@@ -97,12 +89,11 @@ const AdminBlogForm = () => {
       const blogData = {
         title: formData.title,
         content: formData.content,
-        excerpt: formData.excerpt,
+        excerpt: formData.excerpt || null,
         author: formData.author,
         status: formData.status,
-        featured_image: formData.featured_image,
-        tags,
-        slug: isEditing ? undefined : generateSlug(formData.title),
+        featured_image: formData.featured_image || null,
+        tags: tags.length > 0 ? tags : null,
         published_at: formData.status === 'published' ? new Date().toISOString() : null,
         updated_at: new Date().toISOString()
       };
