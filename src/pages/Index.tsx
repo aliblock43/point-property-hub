@@ -521,7 +521,7 @@ const Index = () => {
                             <img
                               src={certificate.image}
                               alt={certificate.title}
-                              className="w-full h-96 object-cover"
+                              className="w-full h-[500px] object-contain bg-white p-4"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
