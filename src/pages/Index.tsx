@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -133,23 +134,26 @@ const Index = () => {
     sales: "650+ Properties Sold",
     rating: 4.9
   }];
+  
+  // Updated testimonials with new names
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "Main Sami",
       role: "First-time Buyer",
       content: "Property Point made buying my first home so easy. Their team was professional and guided me through every step.",
       rating: 5
     }, {
-      name: "Mike Chen",
+      name: "Ikram CH",
       role: "Property Investor",
       content: "I've worked with many real estate agencies, but Property Point stands out for their market knowledge and professionalism.",
       rating: 5
     }, {
-      name: "Emily Rodriguez",
+      name: "Maira Khan",
       role: "Home Seller",
       content: "They sold my house in just 2 weeks! Amazing service and great communication throughout the process.",
       rating: 5
     }];
+    
   const certificates = [
     {
       id: 1,
@@ -180,7 +184,13 @@ const Index = () => {
           <CarouselContent>
             {heroSlides.map((slide, index) => <CarouselItem key={index}>
                 <div className="relative h-screen">
-                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={slide.image} 
+                    alt={slide.title} 
+                    className="w-full h-full object-cover" 
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
                   {/* Enhanced overlay with gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
                   
@@ -277,7 +287,7 @@ const Index = () => {
             <div className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
                 <div className="aspect-video">
-                  <iframe src="https://www.youtube.com/embed/6V4fvoLttp0" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  <iframe src="https://www.youtube.com/embed/6V4fvoLttp0" title="Property Point Updates" className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen loading="lazy"></iframe>
                 </div>
                 {/* Play button overlay - optional decorative element */}
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -309,7 +319,13 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.length > 0 ? featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative">
-                  <img src={property.images?.[0] || '/placeholder.svg'} alt={property.title} className="w-full h-64 object-cover" />
+                  <img 
+                    src={property.images?.[0] || '/placeholder.svg'} 
+                    alt={property.title} 
+                    className="w-full h-64 object-cover" 
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                     Featured
                   </Badge>
@@ -391,7 +407,13 @@ const Index = () => {
                   <CardContent className="p-0 relative">
                     {/* Image Section */}
                     <div className="relative overflow-hidden">
-                      <img src={member.image} alt={member.name} className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <img 
+                        src={member.image} 
+                        alt={member.name} 
+                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" 
+                        loading="lazy"
+                        decoding="async"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       
                       {/* Rating Badge */}
@@ -522,6 +544,8 @@ const Index = () => {
                               src={certificate.image}
                               alt={certificate.title}
                               className="w-full h-[500px] object-contain bg-white p-4"
+                              loading="lazy"
+                              decoding="async"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
