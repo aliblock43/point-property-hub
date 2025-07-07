@@ -153,21 +153,21 @@ const Index = () => {
   const certificates = [
     {
       id: 1,
-      title: "Real Estate Excellence Award",
-      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
-      description: "Outstanding Achievement in Real Estate Services"
+      title: "DHA Lahore Estate Agents Registration",
+      image: "/lovable-uploads/a75d35e2-67d9-4162-a3f8-4e7e9e6d7853.png",
+      description: "Authorized Real Estate Agent Registration Certificate"
     },
     {
       id: 2,
-      title: "Professional Certification",
-      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
-      description: "Certified Real Estate Professional"
+      title: "Real Estate Agent License",
+      image: "/lovable-uploads/82bb2716-350f-450f-adce-cf8300678832.png",
+      description: "Provincial Real Estate Agent Registration"
     },
     {
       id: 3,
-      title: "Certificate of Appreciation",
-      image: "/lovable-uploads/9437e178-24e7-442e-a60b-0926650fffa9.png",
-      description: "Recognition for Outstanding Performance"
+      title: "Taxpayer Registration Certificate",
+      image: "/lovable-uploads/8595a21e-2b56-447b-b07f-974ef914e284.png",
+      description: "Federal Board of Revenue Registration"
     }
   ];
 
