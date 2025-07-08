@@ -12,49 +12,49 @@ const About = () => {
       role: "Chief Executive Officer",
       experience: "12+ years",
       specialties: ["Luxury Properties", "Property Investment"],
-      image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png"
+      image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.webp"
     },
     {
       name: "Adil Ilyas",
       role: "Director of Sales and Business Development",
       experience: "6+ years",
       specialties: ["Investment Properties", "Business Development"],
-      image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png"
+      image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.webp"
     },
     {
       name: "Shahid Iqbal Zia",
       role: "Managing Director",
       experience: "8+ years",
       specialties: ["Commercial Real Estate", "Property Management"],
-      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png"
+      image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.webp"
     },
     {
       name: "Major Sharafat Ali Khan",
       role: "House Sale Expert",
       experience: "8+ years",
       specialties: ["Houses", "Appartments",],
-      image: "/lovable-uploads/PP32.png"
+      image: "/lovable-uploads/PP32.webp"
     },
     {
       name: "Zarrar Malik",
       role: "House Sale Expert",
       experience: "7+ years",
       specialties: ["Houses", "High-end Properties"],
-      image: "/lovable-uploads/PP33.png"
+      image: "/lovable-uploads/PP33.webp"
     },
     {
       name: "Muhammad Iqbal Asim",
       role: "Residential and Commercial Rent Expert",
       experience: "6+ years",
       specialties: ["Residential Properties", "Commercial Rentals"],
-      image: "/lovable-uploads/PP34.png"
+      image: "/lovable-uploads/PP34.webp"
     },
     {
       name: "Muhammad Naeem",
       role: "Residential Sales Manager",
       experience: "9+ years",
       specialties: ["Family Homes", "Relocation Services"],
-      image: "/lovable-uploads/PP35.png"
+      image: "/lovable-uploads/PP35.webp"
     }
   ];
 
@@ -113,7 +113,7 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src="/lovable-uploads/Aboutmain.jpg"
+                src="/lovable-uploads/Aboutmain.webp"
                 alt="Property Point Office"
                 className="rounded-lg shadow-xl"
               />

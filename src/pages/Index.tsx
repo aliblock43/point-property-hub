@@ -164,13 +164,13 @@ const Index = () => {
     {
       id: 2,
       title: "Real Estate Agent License",
-      image: "/lovable-uploads/82bb2716-350f-450f-adce-cf8300678832.png",
+      image: "/lovable-uploads/82bb2716-350f-450f-adce-cf8300678832.webp",
       description: "Provincial Real Estate Agent Registration"
     },
     {
       id: 3,
       title: "Taxpayer Registration Certificate",
-      image: "/lovable-uploads/8595a21e-2b56-447b-b07f-974ef914e284.png",
+      image: "/lovable-uploads/8595a21e-2b56-447b-b07f-974ef914e284.webp",
       description: "Federal Board of Revenue Registration"
     }
   ];
