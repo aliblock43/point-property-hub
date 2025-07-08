@@ -97,10 +97,14 @@
   }
 }
 
-/* Custom orange gradient utilities */
+/* Enhanced white and orange gradient utilities */
 @layer utilities {
   .bg-gradient-orange {
-    @apply bg-gradient-to-r from-orange-500 to-orange-600;
+    @apply bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600;
+  }
+  
+  .bg-gradient-orange-subtle {
+    @apply bg-gradient-to-r from-orange-50 via-orange-100 to-orange-200;
   }
   
   .text-gradient-orange {
@@ -108,6 +112,14 @@
   }
   
   .border-gradient-orange {
-    border-image: linear-gradient(to right, rgb(249 115 22), rgb(234 88 12)) 1;
+    border-image: linear-gradient(to right, rgb(251 146 60), rgb(249 115 22)) 1;
+  }
+  
+  .shadow-orange {
+    box-shadow: 0 4px 14px 0 rgba(249, 115, 22, 0.15);
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:shadow-orange hover:-translate-y-1;
   }
 }

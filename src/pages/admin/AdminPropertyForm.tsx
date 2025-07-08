@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -134,7 +133,7 @@ const AdminPropertyForm = () => {
     try {
       const propertyData = {
         title: formData.title,
-        price: parseFloat(formData.price),
+        price: formData.price,
         location: formData.location,
         type: formData.type,
         bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : null,
@@ -234,7 +233,7 @@ const AdminPropertyForm = () => {
         <Button
           form="property-form"
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-gradient-orange hover:bg-gradient-to-r hover:from-orange-600 hover:to-orange-700 shadow-orange"
           disabled={loading}
         >
           <Save className="w-4 h-4 mr-2" />
@@ -268,10 +267,10 @@ const AdminPropertyForm = () => {
                     Price *
                   </label>
                   <Input
-                    type="number"
+                    type="text"
                     value={formData.price}
                     onChange={(e) => handleChange("price", e.target.value)}
-                    placeholder="0"
+                    placeholder="e.g., Forty Lakh, 50 Crore, etc."
                     required
                   />
                 </div>

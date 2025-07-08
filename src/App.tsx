@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Layout } from "./components/Layout";
+import { useScrollToTop } from "./hooks/useScrollToTop";
 import Index from "./pages/Index";
 import Properties from "./pages/Properties";
 import PropertyDetail from "./pages/PropertyDetail";
@@ -26,6 +27,8 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const LayoutWrapper = () => {
+  useScrollToTop();
+  
   return (
     <Layout>
       <Outlet />

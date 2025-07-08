@@ -28,8 +28,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
-              <Building className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img
+                src="/lovable-uploads/0079bea3-0033-4340-8f6a-e10d96528045.png"
+                alt="Property Point Logo"
+                className="w-full h-full object-contain"
+                loading="eager"
+              />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
               Property Point
@@ -47,7 +52,7 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <Button asChild className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg transition-all duration-300 transform hover:scale-105">
+            <Button asChild className="bg-gradient-orange hover:bg-gradient-to-r hover:from-orange-600 hover:to-orange-700 shadow-orange transition-all duration-300 transform hover:scale-105">
               <Link to="/properties">View Properties</Link>
             </Button>
           </div>
@@ -78,7 +83,7 @@ const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
-              <Button asChild className="w-full mt-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+              <Button asChild className="w-full mt-4 bg-gradient-orange hover:bg-gradient-to-r hover:from-orange-600 hover:to-orange-700">
                 <Link to="/properties" onClick={() => setIsOpen(false)}>
                   View Properties
                 </Link>
