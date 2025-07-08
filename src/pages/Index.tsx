@@ -19,7 +19,7 @@ const Index = () => {
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
 
   const heroSlides = [{
-    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.pngok",
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
