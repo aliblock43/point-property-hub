@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -57,7 +58,7 @@ const AdminPropertyForm = () => {
 
       setFormData({
         title: data.title || "",
-        price: data.price?.toString() || "",
+        price: data.price || "",
         location: data.location || "",
         type: data.type || "",
         bedrooms: data.bedrooms?.toString() || "",
@@ -158,7 +159,7 @@ const AdminPropertyForm = () => {
       } else {
         const { error: insertError } = await supabase
           .from('properties')
-          .insert([propertyData]);
+          .insert(propertyData);
         error = insertError;
       }
 

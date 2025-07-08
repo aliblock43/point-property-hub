@@ -110,7 +110,7 @@ export type Database = {
           id: string
           images: string[] | null
           location: string
-          price: number
+          price: string
           slug: string | null
           status: string | null
           title: string
@@ -130,7 +130,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           location: string
-          price: number
+          price: string
           slug?: string | null
           status?: string | null
           title: string
@@ -150,7 +150,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           location?: string
-          price?: number
+          price?: string
           slug?: string | null
           status?: string | null
           title?: string
