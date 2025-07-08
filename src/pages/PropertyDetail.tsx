@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 interface Property {
   id: string;
   title: string;
-  price: number;
+  price: string;
   location: string;
   type: string;
   bedrooms: number;
@@ -168,7 +169,7 @@ const PropertyDetail = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 text-right">
                   <div className="text-3xl font-bold text-blue-600">
-                    PKR {property.price?.toLocaleString()}
+                    PKR {property.price}
                   </div>
                   <Badge variant="outline" className="mt-2">
                     {property.type}

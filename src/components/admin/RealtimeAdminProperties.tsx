@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 interface Property {
   id: string;
   title: string;
-  price: number;
+  price: string;
   location: string;
   type: string;
   status: string;
@@ -204,7 +204,7 @@ const RealtimeAdminProperties = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center text-orange-600 font-semibold">
                     <DollarSign className="w-4 h-4 mr-1" />
-                    {property.price?.toLocaleString()}
+                    {property.price}
                   </div>
                   <Badge variant="outline" className="border-orange-200 text-orange-700">
                     {property.type}

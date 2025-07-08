@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 interface Property {
   id: string;
   title: string;
-  price: number;
+  price: string;
   location: string;
   type: string;
   bedrooms: number;
@@ -198,7 +199,7 @@ const Properties = () => {
                         {property.title}
                       </h3>
                       <span className="text-xl font-bold text-blue-600 whitespace-nowrap ml-2">
-                        PKR {property.price?.toLocaleString()}
+                        PKR {property.price}
                       </span>
                     </div>
                     <div className="flex items-center text-gray-600 mb-4">
