@@ -158,7 +158,7 @@ const Index = () => {
     {
       id: 1,
       title: "DHA Lahore Estate Agents Registration",
-      image: "/lovable-uploads/a75d35e2-67d9-4162-a3f8-4e7e9e6d7853.png",
+      image: "/lovable-uploads/a75d35e2-67d9-4162-a3f8-4e7e9e6d7853.webp",
       description: "Authorized Real Estate Agent Registration Certificate"
     },
     {
