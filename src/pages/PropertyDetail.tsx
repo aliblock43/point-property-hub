@@ -88,7 +88,7 @@ const PropertyDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -119,7 +119,7 @@ const PropertyDetail = () => {
                   className="w-full h-96 object-cover"
                 />
                 {property.featured && (
-                  <Badge className="absolute top-4 left-4 bg-blue-600">
+                  <Badge className="absolute top-4 left-4 bg-orange-600">
                     Featured
                   </Badge>
                 )}
@@ -142,7 +142,7 @@ const PropertyDetail = () => {
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
                         className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                          currentImageIndex === index ? 'border-blue-600' : 'border-gray-200'
+                          currentImageIndex === index ? 'border-orange-600' : 'border-gray-200'
                         }`}
                       >
                         <img
@@ -168,8 +168,8 @@ const PropertyDetail = () => {
                   </div>
                 </div>
                 <div className="mt-4 sm:mt-0 text-right">
-                  <div className="text-3xl font-bold text-blue-600">
-                    PKR {property.price}
+                  <div className="text-3xl font-bold text-orange-600">
+                    {property.price}
                   </div>
                   <Badge variant="outline" className="mt-2">
                     {property.type}
@@ -181,28 +181,28 @@ const PropertyDetail = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 {property.bedrooms && (
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Bed className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <Bed className="w-8 h-8 mx-auto mb-2 text-orange-600" />
                     <div className="text-2xl font-bold">{property.bedrooms}</div>
                     <div className="text-sm text-gray-600">Bedrooms</div>
                   </div>
                 )}
                 {property.bathrooms && (
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Bath className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <Bath className="w-8 h-8 mx-auto mb-2 text-orange-600" />
                     <div className="text-2xl font-bold">{property.bathrooms}</div>
                     <div className="text-sm text-gray-600">Bathrooms</div>
                   </div>
                 )}
                 {property.area && (
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Square className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <Square className="w-8 h-8 mx-auto mb-2 text-orange-600" />
                     <div className="text-2xl font-bold">{property.area}</div>
                     <div className="text-sm text-gray-600">Area</div>
                   </div>
                 )}
                 {property.year_built && (
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Calendar className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <Calendar className="w-8 h-8 mx-auto mb-2 text-orange-600" />
                     <div className="text-2xl font-bold">{property.year_built}</div>
                     <div className="text-sm text-gray-600">Year Built</div>
                   </div>
@@ -226,7 +226,7 @@ const PropertyDetail = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {property.amenities.map((amenity, index) => (
                       <div key={index} className="flex items-center">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                        <div className="w-2 h-2 bg-orange-600 rounded-full mr-3"></div>
                         <span className="text-gray-700">{amenity}</span>
                       </div>
                     ))}
@@ -275,7 +275,7 @@ const PropertyDetail = () => {
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
                   rows={4}
                 />
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700">
                   Send Message
                 </Button>
               </form>
@@ -297,7 +297,7 @@ const PropertyDetail = () => {
               </div>
             </Card>
 
-            {/* Agent Info - Updated to use real team member */}
+            {/* Agent Info */}
             <Card className="p-6">
               <h3 className="text-xl font-bold mb-4">Your Agent</h3>
               <div className="flex items-center mb-4">
@@ -311,7 +311,7 @@ const PropertyDetail = () => {
                 <div>
                   <div className="font-semibold">Umer Shahid</div>
                   <div className="text-sm text-gray-600">Chief Executive Officer</div>
-                  <div className="text-sm text-blue-600">Licensed Realtor</div>
+                  <div className="text-sm text-orange-600">Licensed Realtor</div>
                 </div>
               </div>
               <p className="text-sm text-gray-700 mb-4">

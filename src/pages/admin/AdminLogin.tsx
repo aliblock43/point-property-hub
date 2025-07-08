@@ -7,8 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Building, Lock, Mail } from "lucide-react";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("propertypoint143");
-  const [password, setPassword] = useState("DNA69");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 

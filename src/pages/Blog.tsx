@@ -83,7 +83,7 @@ const Blog = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -115,7 +115,7 @@ const Blog = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 relative overflow-hidden">
+                <div className="aspect-video bg-gradient-to-br from-orange-100 to-orange-200 relative overflow-hidden">
                   {post.featured_image ? (
                     <LazyImage
                       src={post.featured_image}
@@ -123,8 +123,8 @@ const Blog = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-                      <div className="text-blue-400 text-4xl font-bold">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200">
+                      <div className="text-orange-400 text-4xl font-bold">
                         {post.title.charAt(0)}
                       </div>
                     </div>
@@ -142,7 +142,7 @@ const Blog = () => {
                       {post.author}
                     </div>
                   </div>
-                  <CardTitle className="text-xl font-semibold line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-xl font-semibold line-clamp-2 group-hover:text-orange-600 transition-colors">
                     {post.title}
                   </CardTitle>
                 </CardHeader>
@@ -166,7 +166,7 @@ const Blog = () => {
                   
                   <Link 
                     to={`/blog/${post.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm group"
+                    className="inline-flex items-center text-orange-600 hover:text-orange-700 font-medium text-sm group"
                   >
                     Read More
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

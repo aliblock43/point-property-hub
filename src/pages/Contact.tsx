@@ -201,7 +201,7 @@ const Contact = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3"
+                    className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 sm:py-3"
                     disabled={loading}
                   >
                     {loading ? "Sending..." : "Send Message"}
@@ -221,7 +221,7 @@ const Contact = () => {
               </CardHeader>
               <CardContent className="space-y-4 sm:space-y-6">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mt-1 flex-shrink-0" />
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Office Address</h3>
                     <p className="text-gray-600 mt-1 text-sm sm:text-base">
@@ -233,7 +233,7 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mt-1 flex-shrink-0" />
+                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Phone</h3>
                     <p className="text-gray-600 mt-1 text-sm sm:text-base">+92 321-8451083</p>
@@ -241,7 +241,7 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mt-1 flex-shrink-0" />
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Email</h3>
                     <p className="text-gray-600 mt-1 text-sm sm:text-base">info@realestate.com</p>
@@ -249,7 +249,7 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mt-1 flex-shrink-0" />
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Business Hours</h3>
                     <div className="text-gray-600 mt-1 space-y-1 text-sm sm:text-base">

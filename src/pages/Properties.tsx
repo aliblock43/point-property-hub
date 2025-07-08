@@ -94,7 +94,7 @@ const Properties = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -188,7 +188,7 @@ const Properties = () => {
                       className="w-full h-64 object-cover"
                     />
                     {property.featured && (
-                      <Badge className="absolute top-4 left-4 bg-blue-600">
+                      <Badge className="absolute top-4 left-4 bg-orange-600">
                         Featured
                       </Badge>
                     )}
@@ -198,8 +198,8 @@ const Properties = () => {
                       <h3 className="text-xl font-semibold text-gray-900 line-clamp-1">
                         {property.title}
                       </h3>
-                      <span className="text-xl font-bold text-blue-600 whitespace-nowrap ml-2">
-                        PKR {property.price}
+                      <span className="text-xl font-bold text-orange-600 whitespace-nowrap ml-2">
+                        {property.price}
                       </span>
                     </div>
                     <div className="flex items-center text-gray-600 mb-4">
@@ -220,7 +220,7 @@ const Properties = () => {
                         <span>{property.area}</span>
                       </div>
                     </div>
-                    <Button asChild className="w-full">
+                    <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
                       <Link to={`/properties/${property.slug}`}>
                         View Details
                       </Link>
