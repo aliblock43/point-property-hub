@@ -1,4 +1,5 @@
 
+import React, { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Profile = () => {
@@ -37,6 +38,12 @@ const Profile = () => {
     "/lovable-uploads/PP31.png"
   ];
 
+  const ImageSkeleton = () => (
+    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+      <div className="text-gray-400 text-sm">Loading...</div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-white">
       {/* Page Title */}
@@ -56,12 +63,19 @@ const Profile = () => {
         {portfolioImages.map((imageUrl, index) => (
           <div key={index} className="w-full">
             <AspectRatio ratio={16/9} className="w-full">
-              <img
-                src={imageUrl}
-                alt={`Portfolio image ${index + 1}`}
-                className="w-full h-full object-cover"
-                loading={index < 3 ? "eager" : "lazy"}
-              />
+              <Suspense fallback={<ImageSkeleton />}>
+                <img
+                  src={imageUrl}
+                  alt={`Portfolio showcase ${index + 1} - Professional real estate project`}
+                  className="w-full h-full object-cover"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+              </Suspense>
             </AspectRatio>
           </div>
         ))}

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import LazyImage from "@/components/LazyImage";
 
 interface BlogPost {
   id: string;
@@ -116,9 +117,9 @@ const Blog = () => {
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
                 <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 relative overflow-hidden">
                   {post.featured_image ? (
-                    <img 
-                      src={post.featured_image} 
-                      alt={post.title}
+                    <LazyImage
+                      src={post.featured_image}
+                      alt={`${post.title} - Featured blog post image`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (

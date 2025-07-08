@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Download, X } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 
 const Maps = () => {
   const [selectedMap, setSelectedMap] = useState<number | null>(null);
@@ -66,66 +66,86 @@ const Maps = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {mapImages.map((imageUrl, index) => (
-            <Dialog key={index} open={selectedMap === index} onOpenChange={(open) => setSelectedMap(open ? index : null)}>
-              <DialogTrigger asChild>
-                <div 
-                  className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            <div key={index} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              {/* Card Header with gradient background instead of image */}
+              <div className="aspect-[4/3] bg-gradient-to-br from-orange-100 via-orange-50 to-gray-100 flex items-center justify-center relative">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-orange-600 mb-2">
+                    {mapHeadings[index].charAt(0)}
+                  </div>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Click to view map
+                  </p>
+                </div>
+              </div>
+              
+              {/* Card Content */}
+              <div className="p-4">
+                <h3 
+                  className="text-lg font-semibold text-gray-900 mb-3 cursor-pointer hover:text-orange-600 transition-colors"
                   onClick={() => setSelectedMap(index)}
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={imageUrl}
-                      alt={mapHeadings[index]}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      {mapHeadings[index]}
-                    </h3>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDownload(index);
-                      }}
-                      className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download
-                    </Button>
-                  </div>
-                </div>
-              </DialogTrigger>
-              
-              <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-semibold text-gray-900">
-                    {mapHeadings[index]}
-                  </DialogTitle>
-                </DialogHeader>
+                  {mapHeadings[index]}
+                </h3>
                 
-                <div className="mt-4">
-                  <div className="aspect-[4/3] w-full overflow-hidden rounded-lg">
-                    <img
-                      src={imageUrl}
-                      alt={`${mapHeadings[index]} - Full Size`}
-                      className="w-full h-full object-contain bg-gray-50"
-                    />
-                  </div>
+                <div className="flex space-x-2">
+                  {/* View Map Button */}
+                  <Dialog open={selectedMap === index} onOpenChange={(open) => setSelectedMap(open ? index : null)}>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
+                        onClick={() => setSelectedMap(index)}
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Map
+                      </Button>
+                    </DialogTrigger>
+                    
+                    <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-auto">
+                      <DialogHeader>
+                        <DialogTitle className="text-xl font-semibold text-gray-900">
+                          {mapHeadings[index]}
+                        </DialogTitle>
+                      </DialogHeader>
+                      
+                      <div className="mt-4">
+                        <div className="aspect-[4/3] w-full overflow-hidden rounded-lg">
+                          <img
+                            src={imageUrl}
+                            alt={`${mapHeadings[index]} - Detailed Map View`}
+                            className="w-full h-full object-contain bg-gray-50"
+                            loading="lazy"
+                          />
+                        </div>
+                        
+                        <div className="mt-6 flex justify-center">
+                          <Button
+                            onClick={() => handleDownload(index)}
+                            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-3"
+                          >
+                            <Download className="w-5 h-5 mr-2" />
+                            Download {mapHeadings[index]}
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                   
-                  <div className="mt-6 flex justify-center">
-                    <Button
-                      onClick={() => handleDownload(index)}
-                      className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-3"
-                    >
-                      <Download className="w-5 h-5 mr-2" />
-                      Download {mapHeadings[index]}
-                    </Button>
-                  </div>
+                  {/* Download Button */}
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownload(index);
+                    }}
+                    className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
                 </div>
-              </DialogContent>
-            </Dialog>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -133,4 +153,4 @@ const Maps = () => {
   );
 };
 
-export default Maps
+export default Maps;
