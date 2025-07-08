@@ -19,17 +19,17 @@ const Index = () => {
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
 
   const heroSlides = [{
-    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.webp",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
   }, {
-    image: "/lovable-uploads/579a50ca-0240-45a7-a77c-d35e4681f608.png",
+    image: "/lovable-uploads/579a50ca-0240-45a7-a77c-d35e4681f608.webp",
     title: "DHA MULTAN PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Professional guidance and personalized service for all your property investment needs",
     cta: "Get Started"
   }, {
-    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
+    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.webp",
     title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
@@ -112,7 +112,7 @@ const Index = () => {
   const teamMembers = [{
     name: "Umer Shahid",
     role: "Chief Executive Officer",
-    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png",
+    image: "/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.webp",
     experience: "12+ Years Experience",
     specialization: "Luxury Properties",
     sales: "500+ Properties Sold",
@@ -120,7 +120,7 @@ const Index = () => {
   }, {
     name: "Adil Ilyas",
     role: "Director of Sales and Business Development",
-    image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.png",
+    image: "/lovable-uploads/66a0b920-d4f1-4ef2-966f-5aa6ea4646b1.webp",
     experience: "6+ Years Experience",
     specialization: "Investment Properties",
     sales: "750+ Properties Sold",
@@ -128,7 +128,7 @@ const Index = () => {
   }, {
     name: "Shahid Iqbal Zia",
     role: "Managing Director",
-    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.png",
+    image: "/lovable-uploads/41a5aed2-441a-448a-98fa-048950a6b441.webp",
     experience: "8+ Years Experience",
     specialization: "Commercial Real Estate",
     sales: "650+ Properties Sold",
