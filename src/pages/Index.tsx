@@ -19,7 +19,7 @@ const Index = () => {
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
 
   const heroSlides = [{
-    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
+    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.pngok",
     title: "DHA LAHORE PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Discover the finest properties in the most desirable locations with our expert guidance",
     cta: "Explore Properties"
@@ -29,7 +29,7 @@ const Index = () => {
     subtitle: "Professional guidance and personalized service for all your property investment needs",
     cta: "Get Started"
   }, {
-    image: "/lovable-uploads/cb32ebe6-7718-461f-af6f-2cbbaaed8ee1.png",
+    image: "/lovable-uploads/020a0812-ed93-4c22-886e-f67381c856dd.png",
     title: "DHA QUETTA PLOTS, FILES, COMMERCIAL PROPERTIES",
     subtitle: "Exclusive properties and premium locations for discerning clients who demand excellence",
     cta: "View Luxury Properties"
