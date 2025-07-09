@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,6 @@ import { Search, MapPin, Home, Users, Star, ArrowRight, Bed, Bath, Square, Shopp
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
-import LazyImage from "@/components/LazyImage";
 
 const Index = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -184,10 +184,12 @@ const Index = () => {
           <CarouselContent>
             {heroSlides.map((slide, index) => <CarouselItem key={index}>
                 <div className="relative h-screen">
-                  <LazyImage 
+                  <img 
                     src={slide.image} 
                     alt={slide.title} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover" 
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                   {/* Enhanced overlay with gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
@@ -317,10 +319,12 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.length > 0 ? featuredProperties.map(property => <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative">
-                  <LazyImage 
+                  <img 
                     src={property.images?.[0] || '/placeholder.svg'} 
                     alt={property.title} 
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64 object-cover" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                     Featured
@@ -330,7 +334,7 @@ const Index = () => {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold text-gray-900">{property.title}</h3>
                     <span className="text-2xl font-bold text-orange-600">
-                      {property.price}
+                      PKR {property.price?.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center text-gray-600 mb-4">
@@ -403,10 +407,12 @@ const Index = () => {
                   <CardContent className="p-0 relative">
                     {/* Image Section */}
                     <div className="relative overflow-hidden">
-                      <LazyImage 
+                      <img 
                         src={member.image} 
                         alt={member.name} 
-                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" 
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       
@@ -534,10 +540,12 @@ const Index = () => {
                       <Card className="border-0 shadow-2xl overflow-hidden bg-white">
                         <CardContent className="p-0">
                           <div className="relative">
-                            <LazyImage
+                            <img
                               src={certificate.image}
                               alt={certificate.title}
                               className="w-full h-[500px] object-contain bg-white p-4"
+                              loading="lazy"
+                              decoding="async"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
