@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -334,7 +333,7 @@ const Index = () => {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold text-gray-900">{property.title}</h3>
                     <span className="text-2xl font-bold text-orange-600">
-                      PKR {property.price?.toLocaleString()}
+                      {property.price}
                     </span>
                   </div>
                   <div className="flex items-center text-gray-600 mb-4">
