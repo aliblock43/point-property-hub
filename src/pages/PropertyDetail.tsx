@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Bed, Bath, Square, Calendar, Heart, Share, Phone, Mail, User } from "lucide-react";
+import { MapPin, Square, Calendar, Heart, Share, Phone, Mail, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,8 +16,6 @@ interface Property {
   price: string;
   location: string;
   type: string;
-  bedrooms: number;
-  bathrooms: number;
   area: string;
   year_built: number;
   description: string;
@@ -178,21 +176,7 @@ const PropertyDetail = () => {
               </div>
 
               {/* Key Details */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {property.bedrooms && (
-                  <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Bed className="w-8 h-8 mx-auto mb-2 text-orange-600" />
-                    <div className="text-2xl font-bold">{property.bedrooms}</div>
-                    <div className="text-sm text-gray-600">Bedrooms</div>
-                  </div>
-                )}
-                {property.bathrooms && (
-                  <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <Bath className="w-8 h-8 mx-auto mb-2 text-orange-600" />
-                    <div className="text-2xl font-bold">{property.bathrooms}</div>
-                    <div className="text-sm text-gray-600">Bathrooms</div>
-                  </div>
-                )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 {property.area && (
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Square className="w-8 h-8 mx-auto mb-2 text-orange-600" />
@@ -287,11 +271,11 @@ const PropertyDetail = () => {
                 <div className="space-y-2">
                   <Button variant="outline" className="w-full justify-start">
                     <Phone className="w-4 h-4 mr-2" />
-                    +92 300 1234567
+                    0321-8451083
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Mail className="w-4 h-4 mr-2" />
-                    info@propertypoint.com
+                    propertypointestater@gmail.com
                   </Button>
                 </div>
               </div>
@@ -303,8 +287,8 @@ const PropertyDetail = () => {
               <div className="flex items-center mb-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
                   <img 
-                    src="/lovable-uploads/79a7b6f3-488f-4fbb-ad38-210fc36d9e79.png" 
-                    alt="Umer Shahid"
+                    src="/lovable-uploads/36f86c0b-6468-4863-8912-87ad021e857e.png" 
+                    alt="Agent"
                     className="w-full h-full object-cover"
                   />
                 </div>

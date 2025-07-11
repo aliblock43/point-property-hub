@@ -23,8 +23,6 @@ const AdminPropertyForm = () => {
     price: "",
     location: "",
     type: "",
-    bedrooms: "",
-    bathrooms: "",
     area: "",
     year_built: "",
     description: "",
@@ -61,8 +59,6 @@ const AdminPropertyForm = () => {
         price: data.price || "",
         location: data.location || "",
         type: data.type || "",
-        bedrooms: data.bedrooms?.toString() || "",
-        bathrooms: data.bathrooms?.toString() || "",
         area: data.area || "",
         year_built: data.year_built?.toString() || "",
         description: data.description || "",
@@ -137,8 +133,6 @@ const AdminPropertyForm = () => {
         price: formData.price,
         location: formData.location,
         type: formData.type,
-        bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : null,
-        bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : null,
         area: formData.area,
         year_built: formData.year_built ? parseInt(formData.year_built) : null,
         description: formData.description,
@@ -234,7 +228,7 @@ const AdminPropertyForm = () => {
         <Button
           form="property-form"
           type="submit"
-          className="bg-gradient-orange hover:bg-gradient-to-r hover:from-orange-600 hover:to-orange-700 shadow-orange"
+          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-orange"
           disabled={loading}
         >
           <Save className="w-4 h-4 mr-2" />
@@ -304,29 +298,7 @@ const AdminPropertyForm = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bedrooms
-                  </label>
-                  <Input
-                    type="number"
-                    value={formData.bedrooms}
-                    onChange={(e) => handleChange("bedrooms", e.target.value)}
-                    placeholder="0"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bathrooms
-                  </label>
-                  <Input
-                    type="number"
-                    value={formData.bathrooms}
-                    onChange={(e) => handleChange("bathrooms", e.target.value)}
-                    placeholder="0"
-                  />
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Area
