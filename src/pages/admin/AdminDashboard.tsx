@@ -20,10 +20,10 @@ const AdminDashboard = () => {
   const isMainDashboard = location.pathname === "/admin/dashboard" || location.pathname === "/admin/";
 
   const stats = [
-    { title: "Total Properties", value: "24", icon: Building, color: "bg-orange-500" },
+    { title: "Total Properties", value: "24", icon: Building, color: "bg-blue-500" },
     { title: "Active Listings", value: "18", icon: Home, color: "bg-green-500" },
     { title: "New Messages", value: "7", icon: MessageSquare, color: "bg-purple-500" },
-    { title: "Blog Posts", value: "12", icon: FileText, color: "bg-orange-600" }
+    { title: "Blog Posts", value: "12", icon: FileText, color: "bg-orange-500" }
   ];
 
   const recentActivity = [
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
                     <div className="space-y-4">
                       {recentActivity.map((activity, index) => (
                         <div key={index} className="flex items-start space-x-3">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
                           <div className="flex-1">
                             <p className="text-sm font-medium text-gray-900">
                               {activity.action}
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Button 
                       onClick={() => navigate("/admin/properties/new")}
-                      className="h-20 bg-orange-600 hover:bg-orange-700"
+                      className="h-20 bg-blue-600 hover:bg-blue-700"
                     >
                       <div className="text-center">
                         <Building className="w-6 h-6 mx-auto mb-2" />
