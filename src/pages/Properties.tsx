@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Square, Filter, Search } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Filter, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,6 +16,8 @@ interface Property {
   price: string;
   location: string;
   type: string;
+  bedrooms: number;
+  bathrooms: number;
   area: string;
   images: string[];
   featured: boolean;
@@ -204,14 +206,20 @@ const Properties = () => {
                       <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
                       <span className="line-clamp-1">{property.location}</span>
                     </div>
-                    {property.area && (
-                      <div className="flex items-center justify-center text-sm text-gray-500 mb-4">
-                        <div className="flex items-center">
-                          <Square className="w-4 h-4 mr-1" />
-                          <span>{property.area}</span>
-                        </div>
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center">
+                        <Bed className="w-4 h-4 mr-1" />
+                        <span>{property.bedrooms} bed</span>
                       </div>
-                    )}
+                      <div className="flex items-center">
+                        <Bath className="w-4 h-4 mr-1" />
+                        <span>{property.bathrooms} bath</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Square className="w-4 h-4 mr-1" />
+                        <span>{property.area}</span>
+                      </div>
+                    </div>
                     <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
                       <Link to={`/properties/${property.slug}`}>
                         View Details

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { Building, Plus, Edit, Trash2, MapPin } from "lucide-react";
+import { Building, Plus, Edit, Trash2, MapPin, DollarSign } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -203,6 +203,7 @@ const RealtimeAdminProperties = () => {
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center text-orange-600 font-semibold">
+                    <DollarSign className="w-4 h-4 mr-1" />
                     {property.price}
                   </div>
                   <Badge variant="outline" className="border-orange-200 text-orange-700">
