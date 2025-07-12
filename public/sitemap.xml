@@ -3,7 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://your-domain.com/</loc>
+    <loc>https://propertypointestate.com/</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,7 +11,7 @@
   
   <!-- Properties Page -->
   <url>
-    <loc>https://your-domain.com/properties</loc>
+    <loc>https://propertypointestate.com/properties</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
@@ -19,7 +19,7 @@
   
   <!-- About Page -->
   <url>
-    <loc>https://your-domain.com/about</loc>
+    <loc>https://propertypointestate.com/about</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -27,7 +27,7 @@
   
   <!-- Contact Page -->
   <url>
-    <loc>https://your-domain.com/contact</loc>
+    <loc>https://propertypointestate.com/contact</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -35,7 +35,7 @@
   
   <!-- Blog Page -->
   <url>
-    <loc>https://your-domain.com/blog</loc>
+    <loc>https://propertypointestate.com/blog</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -43,7 +43,7 @@
   
   <!-- Maps Page -->
   <url>
-    <loc>https://your-domain.com/maps</loc>
+    <loc>https://propertypointestate.com/maps</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -51,7 +51,7 @@
   
   <!-- Profile Page -->
   <url>
-    <loc>https://your-domain.com/profile</loc>
+    <loc>https://propertypointestate.com/profile</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
