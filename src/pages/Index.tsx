@@ -162,14 +162,14 @@ const Index = () => {
     },
     {
       id: 2,
-      title: "Real Estate Agent License",
-      image: "/lovable-uploads/82bb2716-350f-450f-adce-cf8300678832.webp",
-      description: "Provincial Real Estate Agent Registration"
+      title: "Active Taxpayer Certificate",
+      image: "/lovable-uploads/TAXpayer.webp",
+      description: "Certificate proving active taxpayer status"
     },
     {
       id: 3,
       title: "Taxpayer Registration Certificate",
-      image: "/lovable-uploads/8595a21e-2b56-447b-b07f-974ef914e284.webp",
+      image: "/lovable-uploads/FBRcerti.webp",
       description: "Federal Board of Revenue Registration"
     }
   ];
@@ -601,11 +601,11 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="transform hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-bold mb-4">500+</div>
+              <div className="text-5xl font-bold mb-4">2500+</div>
               <div className="text-orange-200 text-lg">Properties Sold</div>
             </div>
             <div className="transform hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-bold mb-4">1000+</div>
+              <div className="text-5xl font-bold mb-4">5000+</div>
               <div className="text-orange-200 text-lg">Happy Clients</div>
             </div>
             <div className="transform hover:scale-105 transition-transform duration-300">
