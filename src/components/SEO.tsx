@@ -15,7 +15,7 @@ const SEO = ({
   description = "Find your perfect property with Property Point. Browse luxury homes, apartments, and investment opportunities in DHA Lahore, Multan & Quetta.",
   keywords = "DHA Lahore properties, DHA Multan real estate, DHA Quetta plots, property investment Pakistan, real estate agent",
   image = "https://lovable.dev/opengraph-image-p98pqg.png",
-  url = "https://your-domain.com",
+  url = "https://propertypointestate.com",
   type = "website"
 }: SEOProps) => {
   return (
